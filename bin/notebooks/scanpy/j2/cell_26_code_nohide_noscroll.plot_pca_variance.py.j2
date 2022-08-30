@@ -1,0 +1,9 @@
+{%- block plot_pca_variance -%}
+var_ratio = adata.uns["pca"]["variance_ratio"]
+
+fig = px.scatter(x=range(1, len(var_ratio)+1), y=var_ratio)
+fig.write_image( join("output", "pca_variance_ratio.png") )
+fig.write_image( join("output", "pca_variance_ratio.pdf") )
+
+fig
+{%- endblock -%}

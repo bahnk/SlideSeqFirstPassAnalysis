@@ -1,0 +1,25 @@
+{%- block load -%}
+counts <- Seurat::Read10X("{{ path_dge }}")
+
+spatial <-
+   readr::read_csv("{{ path_spatial }}") %>%
+   dplyr::filter( SeqBarcode %in% colnames(counts) ) %>%
+   dplyr::arrange(SeqBarcode) %>%
+   tibble::column_to_rownames("SeqBarcode")
+
+stopifnot( sum( ! spatial$SeqBarcode == colnames(counts) ) == 0 )
+
+args <- list("project"="{{ name }}", "assay"="Spatial", "meta.data"=spatial)
+obj <- do.call(SeuratObject::CreateSeuratObject, c(counts, args))
+
+img <- new(
+   "SlideSeq",
+   coordinates=obj@meta.data[,c("x","y")],
+   assay="Spatial",
+   key="_images"
+   )
+
+obj@images <- list(image=img)
+
+obj$log_nCount_Spatial <- log(obj$nCount_Spatial)
+{%- endblock -%}

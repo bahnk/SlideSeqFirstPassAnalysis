@@ -1,0 +1,14 @@
+{%- block load_sample -%}
+counts <- Seurat::Read10X("{{ path_dge }}")
+
+nUMIs <- colSums(counts)
+
+spatial <-
+    readr::read_csv("{{ path_spatial }}") %>%
+    dplyr::select(SeqBarcode, x, y) %>%
+    tibble::column_to_rownames("SeqBarcode")
+
+spatial <- spatial[colnames(counts),]
+
+spots <- spacexr::SpatialRNA(spatial, counts, nUMIs)
+{%- endblock -%}

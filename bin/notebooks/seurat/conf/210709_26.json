@@ -1,0 +1,7 @@
+{
+   "name": "210709_26",
+   "path_dge": "../results/210709_26_dge",
+   "path_spatial": "../results/210709_26.csv",
+   "path_outdir": "results/seurat/210709_26",
+   "clusters_resolution": "0.05"
+}

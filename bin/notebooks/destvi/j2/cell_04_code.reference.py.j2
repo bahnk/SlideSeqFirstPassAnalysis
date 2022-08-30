@@ -1,0 +1,31 @@
+{%- block reference -%}
+
+sc_adata = sc.read_h5ad("{{ reference }}")
+
+# otherwise names can't match with spatial data
+sc_adata.var_names = sc_adata.var_names.str.upper()
+
+# minimum number UMIs
+sc.pp.filter_genes(sc_adata, min_counts=10)
+sc_adata.layers["counts"] = sc_adata.X.copy()
+save_anndata(sc_adata, h5dir, "00", "filter.{{ name }}")
+
+# variable genes
+sc.pp.highly_variable_genes(
+	sc_adata,
+	n_top_genes={{ ngenes }},
+	subset=True,
+	layer="counts",
+	flavor="seurat_v3"
+)
+save_anndata(sc_adata, h5dir, "01", "vargenes.{{ name }}")
+
+# normalize
+sc.pp.normalize_total(sc_adata, target_sum=10e4)
+save_anndata(sc_adata, h5dir, "02", "normalized.{{ name }}")
+
+# log
+sc.pp.log1p(sc_adata)
+sc_adata.raw = sc_adata
+save_anndata(sc_adata, h5dir, "03", "logtransformed.{{ name }}")
+{%- endblock -%}

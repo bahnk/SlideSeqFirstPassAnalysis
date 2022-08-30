@@ -1,0 +1,8 @@
+{%- block plot_spatial_clusters -%}
+spatial_cluster_plot <- Seurat::SpatialDimPlot(obj, stroke=0)
+
+ggplot2::ggsave("output/spatial.png", spatial_cluster_plot, width=9, height=6)
+ggplot2::ggsave("output/spatial.pdf", spatial_cluster_plot, width=9, height=6)
+
+spatial_cluster_plot
+{%- endblock -%}

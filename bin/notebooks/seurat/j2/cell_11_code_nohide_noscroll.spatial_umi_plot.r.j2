@@ -1,0 +1,10 @@
+{%- block spatial_umi_plot -%}
+obj %>%
+   Seurat::SpatialFeaturePlot(., features="log_nCount_Spatial") +
+   ggplot2::theme(legend.position="right") -> spatial_umi_plot
+
+ggplot2::ggsave("output/spatial_umi.png", spatial_umi_plot, width=9, height=6)
+ggplot2::ggsave("output/spatial_umi.pdf", spatial_umi_plot, width=9, height=6)
+
+spatial_umi_plot
+{%- endblock -%}

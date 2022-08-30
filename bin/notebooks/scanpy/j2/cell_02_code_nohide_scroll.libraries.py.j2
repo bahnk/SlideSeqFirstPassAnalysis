@@ -1,0 +1,16 @@
+{%- block libraries -%}
+from IPython.core.display import display, Image
+from numpy.random import choice
+from os import makedirs
+from os.path import join
+from plotly.subplots import make_subplots
+
+import ipywidgets as widgets
+import numpy as np
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+import scanpy as sc
+import seaborn as sns
+import session_info
+{%- endblock -%}

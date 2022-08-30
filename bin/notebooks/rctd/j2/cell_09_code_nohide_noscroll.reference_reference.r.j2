@@ -1,0 +1,4 @@
+{%- block reference_reference -%}
+ref <- spacexr::Reference(round(ref_counts), cell_types, ref_nUMIs)
+saveRDS(ref, "output/reference.rds")
+{%- endblock -%}

@@ -1,0 +1,3 @@
+{%- block neighbors -%}
+obj <- Seurat::FindNeighbors(obj, dims=1:{{ param_seurat_n_components }})
+{%- endblock -%}

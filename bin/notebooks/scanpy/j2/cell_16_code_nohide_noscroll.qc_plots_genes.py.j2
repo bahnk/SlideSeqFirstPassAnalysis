@@ -1,0 +1,38 @@
+{%- block qc_plots_genes -%}
+adata.var["detected"] = np.where(adata.var.n_cells_by_counts > 0,
+   "Detected", "Undetected")
+
+df = adata\
+   .var\
+   .detected\
+   .value_counts()\
+   .to_frame()\
+   .reset_index()\
+   .rename(columns={"index": "Gene", "detected": "Number"})
+
+fig = px.bar(df, x="Gene", y="Number", text_auto=True)
+
+tab_content = [go.FigureWidget(fig)]
+tab_titles = ["Detected genes"]
+
+plots = [
+   ("total_counts", "Total counts"),
+   ("mean_counts", "Mean counts"),
+   ("n_cells_by_counts", "Beads"),
+   ("pct_dropout_by_counts", "Dropout")
+]
+
+for column, title in plots:
+   fig = px.violin(adata.var.sample(2000), y=column, box=True, points="all")
+   fig.write_image( join("output", f"qc_genes.{column}.pdf") )
+   fig.write_image( join("output", f"qc_genes.{column}.png") )
+   tab_content.append( go.FigureWidget(fig) )
+   tab_titles.append(title)
+
+# display plots
+if in_jupyter():
+   tab = widgets.Tab(tab_content)
+   for i, title in enumerate(tab_titles):
+      tab.set_title(i, title)
+   display(tab)
+{%- endblock -%}

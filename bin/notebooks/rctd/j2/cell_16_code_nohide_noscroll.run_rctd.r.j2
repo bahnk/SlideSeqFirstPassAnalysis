@@ -1,0 +1,10 @@
+{%- block run_rctd -%}
+rctd <- spacexr::run.RCTD(rctd, doublet_mode="{{ param_rctd_mode }}")
+
+saveRDS(rctd, "output/rctd.rds")
+
+readr::write_csv(
+   rctd@results$results_df %>% tibble::rownames_to_column("cell"),
+   "output/rctd.csv"
+)
+{%- endblock -%}

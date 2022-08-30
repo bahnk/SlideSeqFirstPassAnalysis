@@ -1,0 +1,18 @@
+{%- block qc_plots_mitoch -%}
+   #("pct_counts_mt", "Percent Mitoch")
+
+fig1 = px.violin(adata.obs.sample(2000), y="pct_counts_mt", box=True, points="all")
+fig1.write_image( join("output", "pct_counts_mt.pdf") )
+fig1.write_image( join("output", "pct_counts_mt.png") )
+
+fig2 = px.scatter(adata.obs.sample(2000), x="total_counts", y="pct_counts_mt")
+fig2.write_image( join("output", "total_counts_VS_pct_counts_mt.png") )
+fig2.write_image( join("output", "total_counts_VS_pct_counts_mt.pdf") )
+
+# display plots
+if in_jupyter():
+   tab = widgets.Tab([go.FigureWidget(fig1), go.FigureWidget(fig2)])
+   tab.set_title(0, "Percent Mitoch")
+   tab.set_title(1, "Counts VS Mitoch")
+   display(tab)
+{%- endblock -%}

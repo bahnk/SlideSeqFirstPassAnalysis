@@ -1,0 +1,18 @@
+{%- block spatial_model -%}
+DestVI.setup_anndata(st_adata, layer="counts")
+st_model = DestVI.from_rna_model(st_adata, sc_model)
+st_model.view_anndata_setup()
+
+test = {{ test }}
+
+if test:
+	st_model.train(max_epochs=2)
+	st_model.history["elbo_train"].plot()
+else:
+	st_model.train(max_epochs=1000)
+	st_model.history["elbo_train"].iloc[10:].plot() 
+
+save_model(st_model, outdir, "{{ name }}", "spatial")
+
+plt.show()
+{%- endblock -%}

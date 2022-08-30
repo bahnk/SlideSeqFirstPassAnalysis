@@ -1,0 +1,4 @@
+{%- block create_sample -%}
+plan("multicore", workers={{ param_rctd_n_cpus }})
+rctd <- spacexr::create.RCTD(spots, ref, max_cores={{ param_rctd_n_cpus }})
+{%- endblock -%}

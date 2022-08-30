@@ -1,0 +1,19 @@
+{%- block single_cell_model -%}
+CondSCVI.setup_anndata(adata, layer="counts", labels_key="Assignment")
+sc_model = CondSCVI(adata, weight_obs=False)
+sc_model.view_anndata_setup()
+
+test = {{ test }}
+
+if test:
+	sc_model.train(max_epochs=2)
+	sc_model.history["elbo_train"].plot()
+else:
+	sc_model.train(max_epochs=170)
+	sc_model.history["elbo_train"].iloc[5:].plot()
+
+plt.show()
+
+save_model(sc_model, outdir, "{{ name }}", "singlecell")
+save_anndata(adata, h5dir, "04", f"trained.{{ name }}")
+{%- endblock -%}

@@ -1,0 +1,10 @@
+{%- block plot_all_cell_types -%}
+sc.pl.embedding(
+	st_adata,
+	basis="spatial",
+	color="CellType",
+	s=3,
+	save=f".cell_type_all.{{ name }}",
+	show=True
+	)
+{%- endblock -%}

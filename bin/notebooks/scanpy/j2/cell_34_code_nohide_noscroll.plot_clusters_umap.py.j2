@@ -1,0 +1,10 @@
+{%- block plot_clusters_umap -%}
+args = {
+      "x": np.apply_along_axis(lambda x: x[0], arr=adata.obsm["X_umap"], axis=1),
+      "y": np.apply_along_axis(lambda x: x[1], arr=adata.obsm["X_umap"], axis=1),
+      "color": adata.obs.clusters
+}
+fig = px.scatter(**args)
+fig.write_image( join("output", "clusters_umap.png") )
+fig
+{%- endblock -%}

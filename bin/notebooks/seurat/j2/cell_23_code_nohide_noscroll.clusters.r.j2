@@ -1,0 +1,7 @@
+{%- block clusters -%}
+BiocParallel::register(MulticoreParam({{ param_seurat_n_cpus }}))
+base::options(future.globals.maxSize = {{ param_seurat_memory }} * 1024^2)
+future::plan("multiprocess", workers={{ param_seurat_n_cpus }})
+
+obj <- Seurat::FindClusters(obj, resolution={{ param_seurat_clusters_resolution }}, verbose=T)
+{%- endblock -%}

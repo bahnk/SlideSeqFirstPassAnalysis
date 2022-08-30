@@ -1,0 +1,3 @@
+{%- block sctransform -%}
+obj <- Seurat::SCTransform(obj, assay="Spatial", ncells={{ param_seurat_sctransform_n_cells }}, verbose=T)
+{%- endblock -%}

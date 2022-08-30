@@ -1,0 +1,37 @@
+{%- block qc_plots_gene_counts -%}
+plots = [
+   ("total_counts", "Total counts"),
+   ("n_genes_by_counts", "Detected genes")
+]
+
+tab_content = []
+tab_titles = []
+
+for column, title in plots:
+
+   fig = px.violin(adata.obs.sample(2000), y=column, box=True, points="all")
+   fig.write_image( join("output", f"qc_beads.{column}.pdf") )
+   fig.write_image( join("output", f"qc_beads.{column}.png") )
+   tab_content.append( go.FigureWidget(fig) )
+   tab_titles.append(title)
+
+   fig = px.scatter(adata.obs, x="x", y="y", color=column)
+   fig.write_image( join("output", f"qc_beads.{column}.spatial.pdf") )
+   fig.write_image( join("output", f"qc_beads.{column}.spatial.png") )
+   tab_content.append( go.FigureWidget(fig) )
+   tab_titles.append(f"{title} (xy)")
+
+fig = px.scatter(adata.obs.sample(2000), x="total_counts", y="n_genes_by_counts")
+fig.write_image( join("output", "total_counts_VS_n_genes_by_counts.png") )
+fig.write_image( join("output", "total_counts_VS_n_genes_by_counts.pdf") )
+
+tab_content += [go.FigureWidget(fig)]
+tab_titles += ["Counts VS Genes"]
+
+# display plots
+if in_jupyter():
+   tab = widgets.Tab(tab_content)
+   for i, title in enumerate(tab_titles):
+      tab.set_title(i, title)
+   display(tab)
+{%- endblock -%}

@@ -1,0 +1,13 @@
+{%- block scatter_plot_count_mitoch -%}
+scatter_plot <-
+   Seurat::FeatureScatter(
+      obj,
+      feature1="nCount_Spatial",
+      feature2="percent.mt"
+   )
+
+ggplot2::ggsave("output/scatter_count_mitoch.png", scatter_plot, width=9, height=6)
+ggplot2::ggsave("output/scatter_count_mitoch.pdf", scatter_plot, width=9, height=6)
+
+scatter_plot
+{%- endblock -%}

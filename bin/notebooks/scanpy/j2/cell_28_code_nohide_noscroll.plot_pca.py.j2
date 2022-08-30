@@ -1,0 +1,13 @@
+{%- block plot_pca -%}
+df = pd.DataFrame(
+   np.hstack([adata.obs.index[:,None], adata.obsm["X_pca"][:,:5]]),
+   columns=["Bead"] + [f"PC{i+1}" for i in range(5)]
+   )\
+   .melt(id_vars=["Bead", "PC1"], var_name="PC", value_name="Value")
+
+fig = px.scatter(df, x="PC1", y="Value", facet_col="PC", facet_col_wrap=2)
+fig.write_image( join("output", "pca.png") )
+fig.write_image( join("output", "pca.pdf") )
+
+fig
+{%- endblock -%}

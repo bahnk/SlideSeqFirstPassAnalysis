@@ -1,0 +1,5 @@
+{%- block plot_clusters_spatial -%}
+fig = px.scatter(adata.obs, x="x", y="y", color="clusters")
+fig.write_image( join("output", "clusters_spatial.png") )
+fig
+{%- endblock -%}

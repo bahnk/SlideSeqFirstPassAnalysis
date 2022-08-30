@@ -1,0 +1,12 @@
+{%- block functions -%}
+##################
+def in_jupyter():#
+##################
+   try:
+      __IPYTHON__
+   except NameError:
+      return False
+   else:
+      return "IPKernelApp" in get_ipython().config.keys()
+   ############################################################################
+{%- endblock -%}

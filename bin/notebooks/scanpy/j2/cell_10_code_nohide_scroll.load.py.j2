@@ -1,0 +1,9 @@
+{%- block load -%}
+spatial = pd\
+   .read_csv("{{ path_spatial }}")\
+   .rename(columns={"PuckBarcode": "Barcode"})\
+   .set_index("SeqBarcode")
+
+adata = sc.read_10x_mtx("{{ path_dge }}")
+adata.obs = spatial.loc[ adata.obs.index ]
+{%- endblock -%}

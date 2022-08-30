@@ -1,0 +1,10 @@
+{%- block violin_plot_count -%}
+obj %>%
+   Seurat::VlnPlot(., features="nCount_Spatial", pt.size=0, log=TRUE) +
+   Seurat::NoLegend() -> vln_count_plot
+
+ggplot2::ggsave("output/violin_count.png", vln_count_plot, width=9, height=6)
+ggplot2::ggsave("output/violin_count.pdf", vln_count_plot, width=9, height=6)
+
+vln_count_plot
+{%- endblock -%}

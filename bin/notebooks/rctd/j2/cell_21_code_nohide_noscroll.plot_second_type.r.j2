@@ -1,0 +1,16 @@
+{%- block plot_second_type -%}
+if ( "second_type" %in% colnames(rctd@results$results_df) )
+{
+   df <-
+      rctd@results$results_df %>%
+      tibble::rownames_to_column("cell") %>%
+      dplyr::inner_join( spatial %>% tibble::rownames_to_column("cell") )
+   
+   fig <- plotly::plot_ly(data=df, x=~x, y=~y, color=~second_type)
+   
+   plotly::save_image(fig, "output/second_type.png")
+   plotly::save_image(fig, "output/second_type.pdf")
+   
+   fig
+}
+{%- endblock -%}

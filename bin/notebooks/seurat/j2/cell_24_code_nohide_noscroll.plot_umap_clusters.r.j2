@@ -1,0 +1,8 @@
+{%- block plot_umap_clusters -%}
+umap_plot <- Seurat::DimPlot(obj, reduction="umap", label=TRUE)
+
+ggplot2::ggsave("output/umap.png", umap_plot, width=9, height=6)
+ggplot2::ggsave("output/umap.pdf", umap_plot, width=9, height=6)
+
+umap_plot
+{%- endblock -%}

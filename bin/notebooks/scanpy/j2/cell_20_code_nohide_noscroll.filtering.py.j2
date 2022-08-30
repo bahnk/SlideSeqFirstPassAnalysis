@@ -1,0 +1,14 @@
+{%- block filtering -%}
+print("Before filtering:")
+print(adata)
+
+adata = adata[ adata.obs.n_genes_by_counts > {{ param_scanpy_min_genes }} , :]
+adata = adata[ adata.obs.n_genes_by_counts < {{ param_scanpy_max_genes }} , :]
+adata = adata[ adata.obs.pct_counts_mt < {{ param_scanpy_max_pct_mitoch }} , :]
+
+sc.pp.filter_genes(adata, min_cells={{ param_scanpy_min_cells }})
+
+print("\n\n")
+print("After filtering:")
+print(adata)
+{%- endblock -%}

@@ -1,0 +1,12 @@
+{%- block violin_plot_mitoch -%}
+obj[["percent.mt"]] <- Seurat::PercentageFeatureSet(obj, pattern="{{ param_seurat_mitochondrial_gene_symbol_prefix }}")
+
+obj %>%
+   Seurat::VlnPlot(., features="percent.mt", pt.size=0, log=TRUE) +
+   Seurat::NoLegend() -> vln_mitoch_plot
+
+ggplot2::ggsave("output/violin_mitoch.png", vln_mitoch_plot, width=9, height=6)
+ggplot2::ggsave("output/violin_mitoch.pdf", vln_mitoch_plot, width=9, height=6)
+
+vln_mitoch_plot
+{%- endblock -%}

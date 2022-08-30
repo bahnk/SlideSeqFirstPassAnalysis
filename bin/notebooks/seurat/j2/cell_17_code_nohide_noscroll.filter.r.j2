@@ -1,0 +1,12 @@
+{%- block filter -%}
+cat("Original\n")
+print(obj)
+
+cat("Filter mitochondria\n")
+obj <- base::subset(obj, percent.mt < {{ param_seurat_max_percentage_mitochondria }})
+print(obj)
+
+cat("Filter UMIs\n")
+obj <- base::subset(obj, nCount_Spatial >= {{ param_seurat_min_gene_count }})
+print(obj)
+{%- endblock -%}

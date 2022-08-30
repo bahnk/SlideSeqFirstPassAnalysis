@@ -1,0 +1,41 @@
+{%- block plot_spatial_individual_clusters -%}
+obj %>%
+   slot(., "meta.data") %>%
+   dplyr::pull(paste0("SCT_snn_res.", {{ param_seurat_clusters_resolution }})) %>%
+   levels() %>%
+   as.numeric(.) %>%
+   sort() -> clusters
+
+
+ncol <- 3
+1:round( length(clusters) / ncol) %>%
+   purrr::map(function(x) ncol * (x-1) + 1:ncol) %>%
+   purrr::map(function(x) clusters[x]) %>%
+   purrr::map(function(x) {
+
+      plot <- Seurat::SpatialDimPlot(
+         obj,
+         cells.highlight=Seurat::CellsByIdentities(object=obj, idents=x),
+         facet.highlight=T
+      )
+
+      basename <- paste0("output/individual_cluster_", paste(na.omit(x), collapse="-"))
+
+      ggplot2::ggsave(
+         filename=paste0(basename, ".png"),
+         plot=plot,
+         widt=9, height=6, dpi=300
+         )
+
+      ggplot2::ggsave(
+         filename=paste0(basename, ".pdf"),
+         plot=plot,
+         widt=9, height=6, dpi=300
+         )
+
+      print(plot)
+
+      list("clusters"=x, "plot"=plot)
+
+   }) -> clusters_plots
+{%- endblock -%}

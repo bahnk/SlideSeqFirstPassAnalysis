@@ -1,0 +1,32 @@
+#!/bin/bash
+
+TEMPLATES=(
+libraries
+functions
+directories
+scanpy_config
+reference
+spatial
+common_genes
+single_cell_model
+spatial_model
+proportions
+plot_all_cell_types
+plot_cell_types_grid
+)
+
+if [[ ! -d tmp ]]
+then
+	mkdir -v tmp
+fi
+
+for j in $(seq 1 ${#TEMPLATES[@]})
+do
+	i=$((j-1))
+	num=$(printf "%0.2d" $i)
+	name=${TEMPLATES[i]}
+	filename="tmp/cell_${num}_code.${name}.py.j2"
+	echo "{%- block ${name} -%}" > $filename
+	echo "{%- endblock -%}" >> $filename
+done
+

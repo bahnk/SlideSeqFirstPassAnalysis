@@ -1,0 +1,5 @@
+{%- block find_all_markers -%}
+markers <- Seurat::FindAllMarkers(obj, assay="SCT", only.pos=T)
+write.csv(markers, "output/markers.csv", row.names=F)
+markers
+{%- endblock -%}
