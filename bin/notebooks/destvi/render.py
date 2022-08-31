@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import click
+import json
 import nbformat
 import re
 
@@ -11,11 +11,66 @@ from os import listdir
 from pathlib import Path
 from sys import argv
 
+###############################################################################
+## RenderCell()
+###############################################################################
+def RenderCell(environment, filename, args):
+	"""Renders a cell with jinja2."""
+
+	template = environment.get_template(filename)
+
+	template_name = list(template.blocks.keys())[0]
+
+	regex = re.compile(
+		"cell_(?P<num>\\d+)_(?P<type>\\w+)_(?P<hide>\\w+)_(?P<scroll>\\w+).(?P<name>\\w+)\..+"
+	)
+	m = regex.match(filename)
+	assert m, "Cannot parse template filename"
+
+	source = []
+	lines = template.render(**args).split("\n")
+	for i, line in enumerate(lines, start=1):
+		if i < len(lines):
+			source.append( line.replace("\t", "   ") + "\n" )
+		else:
+			source.append( line.replace("\t", "   ") )
+
+	if "markdown" == m.group("type"):
+
+		cell = {
+			"cell_type": m.group("type"),
+			"metadata": {},
+			"source": source
+		}
+
+		return cell
+
+	if "code" == m.group("type"):
+
+		tags = []
+		if m.group("hide") == "hide":
+			tags.append("hide-input")
+		if m.group("scroll") == "scroll":
+			tags.append("output_scroll")
+
+		cell = {
+			"cell_type": m.group("type"),
+			"execution_count": None,
+			"metadata": {
+				"scrolled": True,
+				"tags": tags
+			},
+			"outputs": [],
+			"source": source
+		}
+
+		return cell
+	############################################################################
 
 ###############################################################################
 ## Render()
 ###############################################################################
-def Render(name, reference, puck, dge, outdir="tmp", ngenes=2000, test=False):
+def Render(args):
 	"""Produces jupyter notebook."""
 
 	template_dir = Path(argv[0]).parent / "j2"
@@ -25,34 +80,22 @@ def Render(name, reference, puck, dge, outdir="tmp", ngenes=2000, test=False):
 
 	cells = []
 
+	title = {
+		"cell_type": "markdown",
+		"metadata": {},
+		"source": ["# " + args["name"]]
+	}
+	cells.append(title)
+
+
 	for filename in sorted(listdir(template_dir)):
 
 		if not filename.endswith("j2"):
 			continue
 
-		template = env.get_template(filename)
-
-		template_name = list(template.blocks.keys())[0]
-		cell_type = re.sub("cell_\\d+_([a-z]+)\..*", "\\1", filename)
-
-		source = []
-		lines = template.render(**locals()).split("\n")
-		for i, line in enumerate(lines, start=1):
-			if i < len(lines):
-				source.append( line.replace("\t", "   ") + "\n" )
-			else:
-				source.append( line.replace("\t", "   ") )
-
-		cell = {
-			"cell_type": cell_type,
-			"execution_count": None,
-			"metadata": {},
-			"outputs": [],
-			"source": source
-		}
-
+		cell = RenderCell(env, filename, args)
 		cells.append(cell)
-	
+		
 	notebook = {
 		"metadata": {
 			"kernelspec": {
@@ -69,31 +112,16 @@ def Render(name, reference, puck, dge, outdir="tmp", ngenes=2000, test=False):
 	nbformat.validate(notebook)
 
 	return notebook
-	###########################################################################
-
-@click.command()
-@click.option('--name', prompt="name", help="Sample name", default="sample")
-@click.option('--reference', prompt="reference", help="Path to referene.")
-@click.option('--puck', prompt="puck", help="Path to the puck.")
-@click.option('--dge', prompt="dge", help="Path to the DGE matrix.")
-@click.option('--outdir', prompt="outdir", help="Out directory.", default="tmp")
-@click.option('--ngenes', prompt="ngenes", help="Var genes.", default=2000)
-@click.option('--test', prompt="test", help="Test mode.", default=False)
-@click.option('--nbook', prompt="nbook", help="Out.", default="nbook.ipynb")
-def render(name, reference, puck, dge, outdir, ngenes, test, nbook):
-	args = {
-		"name": name, 
-		"reference": reference,
-		"puck": puck,
-		"dge": dge,
-		"outdir": outdir,
-		"ngenes": ngenes,
-		"test": test
-	}
-	nbk = Render(**args)
-	with open(nbook, "w") as j:
-		dump(nbk, j, indent=3)
+	############################################################################
 
 if __name__ == "__main__":
-	render()
+
+	json_file = open(argv[1], "r")
+	args = json.load(json_file)
+	json_file.close()
+
+	nbk = Render(args)
+
+	with open(argv[2], "w") as j:
+		dump(nbk, j, indent=3)
 

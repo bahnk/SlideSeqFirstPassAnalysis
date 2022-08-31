@@ -1,0 +1,7 @@
+{%- block remove_mitoch -%}
+mt_idx <- grep("mt-", rownames(counts), ignore.case=T)
+if ( length(mt_idx) != 0 )
+{
+   counts <- counts[-mt_idx,]
+}
+{%- endblock -%}

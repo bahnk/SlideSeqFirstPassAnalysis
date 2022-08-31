@@ -1,8 +1,8 @@
 {%- block load_reference -%}
-ref_counts <- Seurat::Read10X("{{ path_reference_dge }}")
+ref_counts <- Seurat::Read10X("{{ path_reference }}")
 
 cell_types <-
-   readr::read_tsv(file.path("{{ path_reference_dge }}", "types.tsv.gz"), col_names=F) %>%
+   readr::read_tsv(file.path("{{ path_reference }}", "types.tsv.gz"), col_names=F) %>%
    dplyr::pull(X1) %>%
    setNames(colnames(ref_counts)) %>%
    as.factor()

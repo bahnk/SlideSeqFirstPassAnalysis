@@ -1,0 +1,14 @@
+{%- block cell_types_grid -%}
+sc.settings.figdir = "output"
+sc.settings.file_format_figs = "png" 
+
+sc.pl.embedding(
+   st_adata,
+   basis="spatial",
+   color=st_adata.obsm["proportions"].columns,
+   cmap="Reds",
+   s=3,
+   save=f".cell_type_grid",
+   show=True
+   )
+{%- endblock -%}

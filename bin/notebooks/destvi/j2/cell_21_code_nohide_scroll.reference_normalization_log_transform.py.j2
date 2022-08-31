@@ -1,0 +1,8 @@
+{%- block reference_normalization_log_transform -%}
+sc.pp.normalize_total(sc_adata, target_sum=10e4)
+save_anndata(sc_adata, "03", "normalized")
+
+sc.pp.log1p(sc_adata)
+sc_adata.raw = sc_adata
+save_anndata(sc_adata, "04", "logtransformed")
+{%- endblock -%}

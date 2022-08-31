@@ -1,0 +1,15 @@
+{%- block st_training -%}
+if {{ param_destvi_test }}: # test mode
+   st_model.train(max_epochs=2)
+   st_model.history["elbo_train"].plot()
+else: # normal mode
+   st_model.train(max_epochs=1500)
+   st_model.history["elbo_train"].iloc[10:].plot() 
+
+plt.show()
+
+st_adata.obsm["proportions"] = st_model.get_proportions()
+
+save_model(st_model, "output", "spatial")
+save_anndata(st_adata, "06", "proportions")
+{%- endblock -%}

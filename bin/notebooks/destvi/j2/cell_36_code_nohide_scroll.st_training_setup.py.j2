@@ -1,0 +1,5 @@
+{%- block st_training_setup -%}
+DestVI.setup_anndata(st_adata, layer="counts")
+st_model = DestVI.from_rna_model(st_adata, sc_model)
+st_model.view_anndata_setup()
+{%- endblock -%}

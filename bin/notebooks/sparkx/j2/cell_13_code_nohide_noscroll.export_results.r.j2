@@ -1,0 +1,5 @@
+{%- block export_results -%}
+spark$res_mtest %>%
+   tibble::rownames_to_column("gene") %>%
+   readr::write_csv("output/results.csv")
+{%- endblock -%}

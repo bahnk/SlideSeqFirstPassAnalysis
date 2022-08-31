@@ -1,0 +1,15 @@
+{%- block reference_variable_genes -%}
+sc.pp.highly_variable_genes(
+    sc_adata,
+    n_top_genes={{ param_destvi_n_variable_genes }},
+    subset=True,
+    layer="counts",
+    flavor="seurat_v3"
+)
+
+sc_adata.layers["counts"] = sc_adata.X.copy()
+sc_adata = sc_adata[ ~ np.all( sc_adata.X.toarray() == 0 , axis=1 ) , : ]
+sc_adata.layers["counts"] = sc_adata.X.copy()
+
+save_anndata(sc_adata, "02", "var_genes")
+{%- endblock -%}

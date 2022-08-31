@@ -1,0 +1,32 @@
+{%- block functions -%}
+###############################################
+def save_anndata(anndata_object, num, suffix):#
+###############################################
+   if not issparse(anndata_object.X):
+      anndata_object.X = csr_matrix(anndata_object.X)
+   anndata_object.write_h5ad( join("output/h5ad", f"anndata.{num}.{suffix}.h5") )
+   ###########################################################################
+
+#################################################
+def save_model(model_object, directory, suffix):#
+#################################################
+
+   model_dir = join(directory, f"model_{suffix}")
+   model_archive = join(model_dir, "model.pt")
+
+   if exists(model_archive):
+      remove(model_archive)
+
+   if exists(model_dir):
+      rmdir(model_dir)
+
+   model_object.save(model_dir)
+   ###########################################################################
+
+############################
+def has_zeros(name, adata):#
+############################
+   genes = np.sum( 0 == np.sum(adata.X, axis=0) )
+   cells = np.sum( 0 == np.sum(adata.X, axis=1) )
+   print(f"{name}: {genes} zeros for genes and {cells} zeros for cells")
+{%- endblock -%}

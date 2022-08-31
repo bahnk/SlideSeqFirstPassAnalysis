@@ -1,0 +1,6 @@
+{%- block directories -%}
+try:
+   makedirs("output/h5ad")
+except OSError as e:
+   pass
+{%- endblock -%}

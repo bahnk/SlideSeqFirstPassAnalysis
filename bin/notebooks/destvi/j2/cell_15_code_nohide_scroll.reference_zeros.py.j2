@@ -1,0 +1,6 @@
+{%- block reference_zeros -%}
+sc_adata = sc_adata[ : , ~ np.all(sc_adata.X.toarray() == 0, axis=0) ]
+sc_adata = sc_adata[ ~ np.all(sc_adata.X.toarray() == 0, axis=1) , : ]
+
+save_anndata(sc_adata, "00", "raw")
+{%- endblock -%}

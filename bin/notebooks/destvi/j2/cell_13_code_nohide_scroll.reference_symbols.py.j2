@@ -1,0 +1,4 @@
+{%- block reference_symbols -%}
+sc_adata.var_names = sc_adata.var_names.str.upper()
+sc_adata = sc_adata[ : , ~ sc_adata.var_names.duplicated() ]
+{%- endblock -%}

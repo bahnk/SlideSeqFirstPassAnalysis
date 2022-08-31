@@ -100,7 +100,7 @@ for i, row in new_df.iterrows():
 	chunk = chunk[begin:end]
 
 	if cell_type == "markdown":
-		chunk = [ line for line in chunk if line != '"""\n']
+		chunk = [ line for line in chunk if line != '"#markdown\n']
 
 	src = []
 	

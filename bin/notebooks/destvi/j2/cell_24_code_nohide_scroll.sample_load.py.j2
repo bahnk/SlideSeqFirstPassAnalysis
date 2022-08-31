@@ -1,0 +1,10 @@
+{%- block sample_load -%}
+spatial = pd\
+   .read_csv("{{ path_spatial }}")\
+   .rename(columns={"PuckBarcode": "Barcode"})\
+   .set_index("SeqBarcode")
+
+st_adata = sc.read_10x_mtx("{{ path_dge }}")
+st_adata.obs = spatial.loc[ st_adata.obs.index ]
+st_adata = st_adata[ : , ~ np.all(st_adata.X.toarray() == 0, axis=0) ]
+{%- endblock -%}

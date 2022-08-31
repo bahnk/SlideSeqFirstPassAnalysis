@@ -15,8 +15,11 @@ def main(in_dir, out_dir, args):#
 
 	tags = [
 		("seurat", "Seurat"),
-		("scanpy", "Scanpy")
-		]
+		("rctd", "RCTD"),
+		("sparkx", "SPARK-X"),
+		("scanpy", "Scanpy"),
+		("destvi", "DestVI")
+	]
 	
 	############################################################################
 	
@@ -84,9 +87,9 @@ def main(in_dir, out_dir, args):#
 	f.close()
 	############################################################################
 
-in_dir = "results/notebooks"
-out_dir = "tmp"
-args = {"project": "Name", "scientist": "Random"}
+#in_dir = "results/notebooks"
+#out_dir = "tmp"
+#args = {"project": "Name", "scientist": "Random"}
 
 if __name__ == "__main__":
 

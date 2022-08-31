@@ -84,10 +84,10 @@ sc.set_figure_params(figsize=(4, 4), frameon=False)
 We load the single-cell reference dataset.
 
 ```{python}
-sc_adata = sc.read_10x_mtx("")
+sc_adata = sc.read_10x_mtx("reference")
 
 args = {
-   "filepath_or_buffer": join("", "types.tsv.gz"),
+   "filepath_or_buffer": join("reference", "types.tsv.gz"),
    "header": None,
    "compression": "gzip"
 }
@@ -235,7 +235,7 @@ sc_model.view_anndata_setup()
 We train the model here.
 
 ```{python}
-if true: # test mode
+if False: # test mode
    sc_model.train(max_epochs=2)
    sc_model.history["elbo_train"].plot()
 else: # normal mode
@@ -261,7 +261,7 @@ st_model.view_anndata_setup()
 We train the model here.
 
 ```{python}
-if true: # test mode
+if False: # test mode
    st_model.train(max_epochs=2)
    st_model.history["elbo_train"].plot()
 else: # normal mode
@@ -287,8 +287,6 @@ for cell_type in st_adata.obsm["proportions"].columns:
 
 st_adata.obs["CellType"] = st_adata.obsm["proportions"].idxmax(axis=1)
 ```
-
-
 
 ```{python}
 sc.settings.figdir = "output"

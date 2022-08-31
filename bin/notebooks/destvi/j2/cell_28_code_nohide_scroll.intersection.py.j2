@@ -1,21 +1,14 @@
-{%- block common_genes -%}
-# remove duplicated gene names
-sc_adata = sc_adata[ : , ~ sc_adata.var.index.duplicated(keep=False) ]
-st_adata = st_adata[ : , ~ st_adata.var.index.duplicated(keep=False) ]
-
-# common genes
+{%- block intersection -%}
 intersect = np.intersect1d(sc_adata.var_names, st_adata.var_names)
+
 print("{0} genes in common over {1}".format(len(intersect), sc_adata.shape[1]))
 
-# keep only the common genes
 adata = sc_adata[:, intersect].copy()
-st_adata = st_adata[:, intersect].copy()
-
-# remove beads with zero count
 adata = adata[ ~ np.all( adata.X.toarray() == 0 , axis=1 ) , : ]
-st_adata = st_adata[ ~ np.all(st_adata.X.toarray() == 0, axis=1) , :]
-
 adata.layers["counts"] = adata.X.copy()
+
+st_adata = st_adata[:, intersect].copy()
+st_adata = st_adata[ ~ np.all(st_adata.X.toarray() == 0, axis=1) , :]
 st_adata.layers["counts"] = st_adata.X.copy()
 st_adata.obsm["spatial"] = st_adata.obs[["x", "y"]].to_numpy()
 

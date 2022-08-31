@@ -26,16 +26,16 @@ j2_param_seurat_memory <- 5000
 
 ###############################################################################
 # cell markdown null null: intro
-"""
+"#markdown
 This is a very a very basic analysis of this sample with Seurat.
-"""
+"#markdown
 # cell markdown null null: intro
 
 ###############################################################################
 # cell markdown null null: libraries
-"""
+"#markdown
 Here are the libraries we need.
-"""
+"#markdown
 # cell markdown null null: libraries
 
 ###############################################################################
@@ -53,10 +53,10 @@ library(purrr)
 
 ###############################################################################
 # cell markdown null null: directories
-"""
+"#markdown
 We create the output directory for this noteboook.
 Every outputs will save there.
-"""
+"#markdown
 # cell markdown null null: directories
 
 ###############################################################################
@@ -66,9 +66,9 @@ dir.create("output", showWarnings=F)
 
 ###############################################################################
 # cell markdown null null: load
-"""
+"#markdown
 We load the digital expression matrix and the spatial information and create an AnnData object.
-"""
+"#markdown
 # cell markdown null null: load
 
 ###############################################################################
@@ -102,18 +102,18 @@ obj$log_nCount_Spatial <- log(obj$nCount_Spatial)
 
 ###############################################################################
 # cell markdown null null: qc_title
-"""
+"#markdown
 ## Quality control
-"""
+"#markdown
 # cell markdown null null: qc_title
 
 ###############################################################################
 # cell markdown null null: gene_counts
-"""
+"#markdown
 ### Gene counts
 
 The distribution of the gene counts.
-"""
+"#markdown
 # cell markdown null null: gene_counts
 
 ###############################################################################
@@ -132,11 +132,11 @@ vln_count_plot
 
 ###############################################################################
 # cell markdown null null: spatial_umis
-"""
+"#markdown
 ### UMIs
 
 UMIs per bead.
-"""
+"#markdown
 # cell markdown null null: spatial_umis
 
 ###############################################################################
@@ -154,11 +154,11 @@ spatial_umi_plot
 
 ###############################################################################
 # cell markdown null null: violin_mitoch
-"""
+"#markdown
 ### Percentage of mitochondria
 
 Distribution of percentage of detected mitochondrial genes.
-"""
+"#markdown
 # cell markdown null null: violin_mitoch
 
 ###############################################################################
@@ -179,11 +179,11 @@ vln_mitoch_plot
 
 ###############################################################################
 # cell markdown null null: scatter_count_mitoch
-"""
+"#markdown
 ### Abnormal beads
 
 Gene counts vers mitochondrial percentage
-"""
+"#markdown
 # cell markdown null null: scatter_count_mitoch
 
 ###############################################################################
@@ -205,11 +205,11 @@ scatter_plot
 
 ###############################################################################
 # cell markdown null null: filter
-"""
+"#markdown
 ## Filtering
 
 We remove abnormal cells.
-"""
+"#markdown
 # cell markdown null null: filter
 
 ################################################################################
@@ -230,9 +230,9 @@ print(obj)
 
 ###############################################################################
 # cell markdown null null: analysis_title
-"""
+"#markdown
 ## Clustering
-"""
+"#markdown
 # cell markdown null null: analysis_title
 
 ###############################################################################
@@ -331,9 +331,9 @@ ncol <- 3
 
 ###############################################################################
 # cell markdown null null: markers_title
-"""
+"#markdown
 ## Marker genes
-"""
+"#markdown
 # cell markdown null null: markers_title
 
 ###############################################################################
@@ -381,9 +381,9 @@ markers %>%
 
 ###############################################################################
 # cell markdown null null: save
-"""
+"#markdown
 ## Save
-"""
+"#markdown
 # cell markdown null null: save
 
 ###############################################################################
@@ -393,9 +393,9 @@ saveRDS(obj, "output/seurat_object.rds")
 
 ###############################################################################
 # cell markdown null null: session
-"""
+"#markdown
 ## Session info
-"""
+"#markdown
 # cell markdown null null: session
 
 ###############################################################################

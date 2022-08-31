@@ -24,9 +24,27 @@ process params_json {
 	script:		
 		
 		def map = [:]
+
 		metadata.each{
-			map[it.key] = it.value.toString()
+
+			if ( ["true", "false"].contains( it.value.toString().toLowerCase() ) )
+			{
+				if ( "true" == it.value.toString().toLowerCase() )
+				{
+					map[it.key] = true
+				}
+				else
+				{
+					map[it.key] = false
+				}
+			}
+
+			else
+			{
+				map[it.key] = it.value.toString()
+			}
 		}
+
 		def json = JsonOutput.toJson(map)
 		def pretty = JsonOutput.prettyPrint(json)
 

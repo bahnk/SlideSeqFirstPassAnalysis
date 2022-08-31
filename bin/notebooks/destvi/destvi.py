@@ -5,7 +5,7 @@
 # j2 variable string: name
 # j2 variable string: path_dge
 # j2 variable string: path_spatial 
-# j2 variable string: path_reference_dge
+# j2 variable string: path_reference
 # j2 variable integer: param_destvi_min_counts
 # j2 variable integer: param_destvi_n_variable_genes
 # j2 variable bool: param_destvi_test
@@ -13,7 +13,7 @@
 j2_name = "sample1"
 j2_path_dge = "test/sample1"
 j2_path_spatial = "test/sample1.csv"
-j2_path_reference_dge = "results/sample1/reference"
+j2_path_reference = "results/sample1/reference"
 j2_param_destvi_min_counts = 10
 j2_param_destvi_n_variable_genes = 2000
 j2_param_destvi_test = True
@@ -93,258 +93,258 @@ def has_zeros(name, adata):#
 
 # cell python nohide scroll: functions
 
-################################################################################
-## cell markdown null null: directories
-#"""
-#We create the output directory for this noteboook.
-#Every outputs will save there.
-#"""
-## cell markdown null null: directories
-#
-################################################################################
-## cell python nohide scroll: directories
-#
-#try:
-#	makedirs("output/h5ad")
-#except OSError as e:
-#	pass
-## cell python nohide scroll: directories
-#
-################################################################################
-## cell markdown null null: scanpy_config
-#"""
-#Configuration of scanpy.
-#"""
-## cell markdown null null: scanpy_config
-#
-################################################################################
-## cell python nohide scroll: scanpy_config
-#sc.settings.figdir = "output"
-#sc.set_figure_params(figsize=(4, 4), frameon=False)
-## cell python nohide scroll: scanpy_config
-#
-################################################################################
-## cell markdown null null: title_reference
-#"""
-### scRNA-seq reference dataset preprocessing
-#"""
-## cell markdown null null: title_reference
-#
-################################################################################
-## cell markdown null null: reference_load
-#"""
-#### Loading
-#
-#We load the single-cell reference dataset.
-#"""
-## cell markdown null null: reference_load
-#
-################################################################################
-## cell python nohide scroll: reference_load
-#sc_adata = sc.read_10x_mtx(j2_path_reference_dge)
-#
-#args = {
-#	"filepath_or_buffer": join(j2_path_reference_dge, "types.tsv.gz"),
-#	"header": None,
-#	"compression": "gzip"
-#}
-#types = pd.read_csv(**args).rename(columns={0: "Type"})
-#types.index = sc_adata.obs_names
-#sc_adata.obs = types
-#
-#sc_adata
-## cell python nohide scroll: reference_load
-#
-################################################################################
-## cell markdown null null: reference_symbols
-#"""
-#### Gene symbols
-#
-#We use the gene symbols as IDs and put convert everything to upper case.
-#So, we also need to check that are no duplicates in gene symbols.
-#"""
-## cell markdown null null: reference_symbols
-#
-################################################################################
-## cell python nohide scroll: reference_symbols
-#sc_adata.var_names = sc_adata.var_names.str.upper()
-#sc_adata = sc_adata[ : , ~ sc_adata.var_names.duplicated() ]
-## cell python nohide scroll: reference_symbols
-#
-################################################################################
-## cell markdown null null: reference_zeros
-#"""
-#### Minimum counts
-#
-#We need to remove the spots and the genes with no count.
-#"""
-## cell markdown null null: reference_zeros
-#
-################################################################################
-## cell python nohide scroll: reference_zeros
-#sc_adata = sc_adata[ : , ~ np.all(sc_adata.X.toarray() == 0, axis=0) ]
-#sc_adata = sc_adata[ ~ np.all(sc_adata.X.toarray() == 0, axis=1) , : ]
-#
-#save_anndata(sc_adata, "00", "raw")
-## cell python nohide scroll: reference_zeros
-#
-################################################################################
-## cell markdown null null: reference_min_counts
-#"""
-#We remove the spots with too few UMIs.
-#"""
-## cell markdown null null: reference_min_counts
-#
-################################################################################
-## cell python nohide scroll: reference_min_counts
-#sc.pp.filter_genes(sc_adata, min_counts=j2_param_destvi_min_counts)
-#sc_adata.layers["counts"] = sc_adata.X.copy()
-#
-#save_anndata(sc_adata, "01", "min_counts")
-### otherwise names can't match
-#
-################################################################################
-## cell markdown null null: reference_variable_genes
-#"""
-#### Variable genes
-#
-#We select the most variable genes.
-#This selection can create spots with no counts.
-#So, we need to remove these spots.
-#"""
-## cell markdown null null: reference_variable_genes
-#
-################################################################################
-## cell python nohide scroll: reference_variable_genes
-#sc.pp.highly_variable_genes(
-#    sc_adata,
-#    n_top_genes=j2_param_destvi_n_variable_genes,
-#    subset=True,
-#    layer="counts",
-#    flavor="seurat_v3"
-#)
-#
-#sc_adata.layers["counts"] = sc_adata.X.copy()
-#sc_adata = sc_adata[ ~ np.all( sc_adata.X.toarray() == 0 , axis=1 ) , : ]
-#sc_adata.layers["counts"] = sc_adata.X.copy()
-#
-#save_anndata(sc_adata, "02", "var_genes")
-## cell python nohide scroll: reference_variable_genes
-#
-################################################################################
-## cell markdown null null: reference_normalization_log_transform
-#"""
-#### Normalization and log-transformation
-#
-#We normalize and log-transform the counts.
-#"""
-## cell markdown null null: reference_normalization_log_transform
-#
-################################################################################
-## cell python nohide scroll: reference_normalization_log_transform
-#sc.pp.normalize_total(sc_adata, target_sum=10e4)
-#save_anndata(sc_adata, "03", "normalized")
-#
-#sc.pp.log1p(sc_adata)
-#sc_adata.raw = sc_adata
-#save_anndata(sc_adata, "04", "logtransformed")
-## cell python nohide scroll: reference_normalization_log_transform
-#
-################################################################################
-## cell markdown null null: title_sample
-#"""
-### The sample
-#"""
-## cell markdown null null: title_sample
-#
-################################################################################
-## cell markdown null null: sample_load
-#"""
-#### Loading
-#
-#We load the sample count and spatial data and create an AnnData object.
-#"""
-## cell markdown null null: sample_load
-#
-################################################################################
-## cell python nohide scroll: sample_load
-#spatial = pd\
-#	.read_csv(j2_path_spatial)\
-#	.rename(columns={"PuckBarcode": "Barcode"})\
-#	.set_index("SeqBarcode")
-#
-#st_adata = sc.read_10x_mtx(j2_path_dge)
-#st_adata.obs = spatial.loc[ st_adata.obs.index ]
-#st_adata = st_adata[ : , ~ np.all(st_adata.X.toarray() == 0, axis=0) ]
-## cell python nohide scroll: sample_load
-#
-################################################################################
-## cell markdown null null: sample_preprocessing
-#"""
-#### Preprocessing
-#
-#We need to apply the same preprocessing as with the scRNA-seq reference dataset.
-#So, we convert the gene symbols to upper case.
-#Then, we normalize, log-transform the counts and remove the duplicates.
-#"""
-## cell markdown null null: sample_preprocessing
-#
-################################################################################
-## cell python nohide scroll: sample_preprocessing
-#
-#st_adata.var_names = st_adata.var_names.str.upper()
-#
-#sc.pp.normalize_total(st_adata, target_sum=10e4)
-#sc.pp.log1p(st_adata)
-#
-#st_adata.raw = st_adata
-#
-#sc_adata = sc_adata[ : , ~ sc_adata.var.index.duplicated(keep=False) ]
-#st_adata = st_adata[ : , ~ st_adata.var.index.duplicated(keep=False) ]
-## cell python nohide scroll: sample_preprocessing
-#
-################################################################################
-## cell markdown null null: intersection
-#"""
-### Common genes
-#
-#We select only the genes that are common to the sample and the reference.
-#The number of genes can end up being quite low because we took only the most variable genes.
-#"""
-## cell markdown null null: intersection
-#
-################################################################################
-## cell python nohide scroll: intersection
-#intersect = np.intersect1d(sc_adata.var_names, st_adata.var_names)
-#
-#print("{0} genes in common over {1}".format(len(intersect), sc_adata.shape[1]))
-#
-#adata = sc_adata[:, intersect].copy()
-#adata = adata[ ~ np.all( adata.X.toarray() == 0 , axis=1 ) , : ]
-#adata.layers["counts"] = adata.X.copy()
-#
-#st_adata = st_adata[:, intersect].copy()
-#st_adata = st_adata[ ~ np.all(st_adata.X.toarray() == 0, axis=1) , :]
-#st_adata.layers["counts"] = st_adata.X.copy()
-#st_adata.obsm["spatial"] = st_adata.obs[["x", "y"]].to_numpy()
-#
-#has_zeros("refeference", adata)
-#has_zeros("spatial", st_adata)
-## cell python nohide scroll: intersection
-#
-################################################################################
-## cell markdown null null: sc_training_title
-#"""
-### Single-cell model training
-#"""
-## cell markdown null null: sc_training_title
-#
-################################################################################
-## cell markdown null null: sc_training_setup
-#"""
-#We can now set up the single-cell model.
-#"""
-## cell markdown null null: sc_training_setup
+###############################################################################
+# cell markdown null null: directories
+"""
+We create the output directory for this noteboook.
+Every outputs will save there.
+"""
+# cell markdown null null: directories
+
+###############################################################################
+# cell python nohide scroll: directories
+
+try:
+	makedirs("output/h5ad")
+except OSError as e:
+	pass
+# cell python nohide scroll: directories
+
+###############################################################################
+# cell markdown null null: scanpy_config
+"""
+Configuration of scanpy.
+"""
+# cell markdown null null: scanpy_config
+
+###############################################################################
+# cell python nohide scroll: scanpy_config
+sc.settings.figdir = "output"
+sc.set_figure_params(figsize=(4, 4), frameon=False)
+# cell python nohide scroll: scanpy_config
+
+###############################################################################
+# cell markdown null null: title_reference
+"""
+## scRNA-seq reference dataset preprocessing
+"""
+# cell markdown null null: title_reference
+
+###############################################################################
+# cell markdown null null: reference_load
+"""
+### Loading
+
+We load the single-cell reference dataset.
+"""
+# cell markdown null null: reference_load
+
+###############################################################################
+# cell python nohide scroll: reference_load
+sc_adata = sc.read_10x_mtx(j2_path_reference)
+
+args = {
+	"filepath_or_buffer": join(j2_path_reference, "types.tsv.gz"),
+	"header": None,
+	"compression": "gzip"
+}
+types = pd.read_csv(**args).rename(columns={0: "Type"})
+types.index = sc_adata.obs_names
+sc_adata.obs = types
+
+sc_adata
+# cell python nohide scroll: reference_load
+
+###############################################################################
+# cell markdown null null: reference_symbols
+"""
+### Gene symbols
+
+We use the gene symbols as IDs and put convert everything to upper case.
+So, we also need to check that are no duplicates in gene symbols.
+"""
+# cell markdown null null: reference_symbols
+
+###############################################################################
+# cell python nohide scroll: reference_symbols
+sc_adata.var_names = sc_adata.var_names.str.upper()
+sc_adata = sc_adata[ : , ~ sc_adata.var_names.duplicated() ]
+# cell python nohide scroll: reference_symbols
+
+###############################################################################
+# cell markdown null null: reference_zeros
+"""
+### Minimum counts
+
+We need to remove the spots and the genes with no count.
+"""
+# cell markdown null null: reference_zeros
+
+###############################################################################
+# cell python nohide scroll: reference_zeros
+sc_adata = sc_adata[ : , ~ np.all(sc_adata.X.toarray() == 0, axis=0) ]
+sc_adata = sc_adata[ ~ np.all(sc_adata.X.toarray() == 0, axis=1) , : ]
+
+save_anndata(sc_adata, "00", "raw")
+# cell python nohide scroll: reference_zeros
+
+###############################################################################
+# cell markdown null null: reference_min_counts
+"""
+We remove the spots with too few UMIs.
+"""
+# cell markdown null null: reference_min_counts
+
+###############################################################################
+# cell python nohide scroll: reference_min_counts
+sc.pp.filter_genes(sc_adata, min_counts=j2_param_destvi_min_counts)
+sc_adata.layers["counts"] = sc_adata.X.copy()
+
+save_anndata(sc_adata, "01", "min_counts")
+# cell python nohide scroll: reference_min_counts
+
+###############################################################################
+# cell markdown null null: reference_variable_genes
+"""
+### Variable genes
+
+We select the most variable genes.
+This selection can create spots with no counts.
+So, we need to remove these spots.
+"""
+# cell markdown null null: reference_variable_genes
+
+###############################################################################
+# cell python nohide scroll: reference_variable_genes
+sc.pp.highly_variable_genes(
+    sc_adata,
+    n_top_genes=j2_param_destvi_n_variable_genes,
+    subset=True,
+    layer="counts",
+    flavor="seurat_v3"
+)
+
+sc_adata.layers["counts"] = sc_adata.X.copy()
+sc_adata = sc_adata[ ~ np.all( sc_adata.X.toarray() == 0 , axis=1 ) , : ]
+sc_adata.layers["counts"] = sc_adata.X.copy()
+
+save_anndata(sc_adata, "02", "var_genes")
+# cell python nohide scroll: reference_variable_genes
+
+###############################################################################
+# cell markdown null null: reference_normalization_log_transform
+"""
+### Normalization and log-transformation
+
+We normalize and log-transform the counts.
+"""
+# cell markdown null null: reference_normalization_log_transform
+
+###############################################################################
+# cell python nohide scroll: reference_normalization_log_transform
+sc.pp.normalize_total(sc_adata, target_sum=10e4)
+save_anndata(sc_adata, "03", "normalized")
+
+sc.pp.log1p(sc_adata)
+sc_adata.raw = sc_adata
+save_anndata(sc_adata, "04", "logtransformed")
+# cell python nohide scroll: reference_normalization_log_transform
+
+###############################################################################
+# cell markdown null null: title_sample
+"""
+## The sample
+"""
+# cell markdown null null: title_sample
+
+###############################################################################
+# cell markdown null null: sample_load
+"""
+### Loading
+
+We load the sample count and spatial data and create an AnnData object.
+"""
+# cell markdown null null: sample_load
+
+###############################################################################
+# cell python nohide scroll: sample_load
+spatial = pd\
+	.read_csv(j2_path_spatial)\
+	.rename(columns={"PuckBarcode": "Barcode"})\
+	.set_index("SeqBarcode")
+
+st_adata = sc.read_10x_mtx(j2_path_dge)
+st_adata.obs = spatial.loc[ st_adata.obs.index ]
+st_adata = st_adata[ : , ~ np.all(st_adata.X.toarray() == 0, axis=0) ]
+# cell python nohide scroll: sample_load
+
+###############################################################################
+# cell markdown null null: sample_preprocessing
+"""
+### Preprocessing
+
+We need to apply the same preprocessing as with the scRNA-seq reference dataset.
+So, we convert the gene symbols to upper case.
+Then, we normalize, log-transform the counts and remove the duplicates.
+"""
+# cell markdown null null: sample_preprocessing
+
+###############################################################################
+# cell python nohide scroll: sample_preprocessing
+
+st_adata.var_names = st_adata.var_names.str.upper()
+
+sc.pp.normalize_total(st_adata, target_sum=10e4)
+sc.pp.log1p(st_adata)
+
+st_adata.raw = st_adata
+
+sc_adata = sc_adata[ : , ~ sc_adata.var.index.duplicated(keep=False) ]
+st_adata = st_adata[ : , ~ st_adata.var.index.duplicated(keep=False) ]
+# cell python nohide scroll: sample_preprocessing
+
+###############################################################################
+# cell markdown null null: intersection
+"""
+## Common genes
+
+We select only the genes that are common to the sample and the reference.
+The number of genes can end up being quite low because we took only the most variable genes.
+"""
+# cell markdown null null: intersection
+
+###############################################################################
+# cell python nohide scroll: intersection
+intersect = np.intersect1d(sc_adata.var_names, st_adata.var_names)
+
+print("{0} genes in common over {1}".format(len(intersect), sc_adata.shape[1]))
+
+adata = sc_adata[:, intersect].copy()
+adata = adata[ ~ np.all( adata.X.toarray() == 0 , axis=1 ) , : ]
+adata.layers["counts"] = adata.X.copy()
+
+st_adata = st_adata[:, intersect].copy()
+st_adata = st_adata[ ~ np.all(st_adata.X.toarray() == 0, axis=1) , :]
+st_adata.layers["counts"] = st_adata.X.copy()
+st_adata.obsm["spatial"] = st_adata.obs[["x", "y"]].to_numpy()
+
+has_zeros("refeference", adata)
+has_zeros("spatial", st_adata)
+# cell python nohide scroll: intersection
+
+###############################################################################
+# cell markdown null null: sc_training_title
+"""
+## Single-cell model training
+"""
+# cell markdown null null: sc_training_title
+
+###############################################################################
+# cell markdown null null: sc_training_setup
+"""
+We can now set up the single-cell model.
+"""
+# cell markdown null null: sc_training_setup
 
 ###############################################################################
 # cell python nohide scroll: sc_training_setup
@@ -404,7 +404,7 @@ We train the model here.
 # cell markdown null null: st_training
 
 ###############################################################################
-# cell python nohide scroll: sc_training
+# cell python nohide scroll: st_training
 
 if j2_param_destvi_test: # test mode
 	st_model.train(max_epochs=2)
@@ -419,7 +419,7 @@ st_adata.obsm["proportions"] = st_model.get_proportions()
 
 save_model(st_model, "output", "spatial")
 save_anndata(st_adata, "06", "proportions")
-# cell python nohide scroll: sc_training
+# cell python nohide scroll: st_training
 
 ###############################################################################
 # cell markdown null null: title_results

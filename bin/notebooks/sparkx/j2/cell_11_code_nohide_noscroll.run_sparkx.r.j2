@@ -1,0 +1,10 @@
+{%- block run_sparkx -%}
+spark <- 
+   SPARK::sparkx(
+      count_in=counts,
+      locus_in=as.matrix(spatial),
+      numCores={{ param_sparkx_n_cpus }},
+      option="mixture",
+      verbose=T
+   )
+{%- endblock -%}

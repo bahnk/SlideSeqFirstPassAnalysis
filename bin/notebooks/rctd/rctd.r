@@ -1,12 +1,12 @@
 #!/usr/bin/Rscript
 
-# j2 variable string: path_reference_dge
+# j2 variable string: path_reference
 # j2 variable string: path_dge
 # j2 variable string: path_spatial 
 # j2 variable integer: param_rctd_n_cpus
 # j2 variable string: param_rctd_mode
 
-j2_path_reference_dge <- "results/sample1/reference"
+j2_path_reference <- "results/sample1/reference"
 j2_path_dge <- "test/sample1"
 j2_path_spatial  <- "test/sample1.csv"
 j2_param_rctd_n_cpus <- 12
@@ -67,10 +67,10 @@ We load the digital expression matrix and the cell types for the reference.
 ###############################################################################
 # cell r nohide noscroll: load_reference
 
-ref_counts <- Seurat::Read10X(j2_path_reference_dge)
+ref_counts <- Seurat::Read10X(j2_path_reference)
 
 cell_types <-
-	readr::read_tsv(file.path(j2_path_reference_dge, "types.tsv.gz"), col_names=F) %>%
+	readr::read_tsv(file.path(j2_path_reference, "types.tsv.gz"), col_names=F) %>%
 	dplyr::pull(X1) %>%
 	setNames(colnames(ref_counts)) %>%
 	as.factor()

@@ -1,0 +1,6 @@
+{%- block reference_min_counts -%}
+sc.pp.filter_genes(sc_adata, min_counts={{ param_destvi_min_counts }})
+sc_adata.layers["counts"] = sc_adata.X.copy()
+
+save_anndata(sc_adata, "01", "min_counts")
+{%- endblock -%}

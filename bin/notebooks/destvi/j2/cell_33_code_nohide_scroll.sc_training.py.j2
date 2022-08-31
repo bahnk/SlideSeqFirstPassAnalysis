@@ -1,0 +1,13 @@
+{%- block sc_training -%}
+if {{ param_destvi_test }}: # test mode
+   sc_model.train(max_epochs=2)
+   sc_model.history["elbo_train"].plot()
+else: # normal mode
+   sc_model.train(max_epochs=150)
+   sc_model.history["elbo_train"].iloc[5:].plot()
+
+plt.show()
+
+save_model(sc_model, "output", "singlecell")
+save_anndata(adata, "05", "trained")
+{%- endblock -%}

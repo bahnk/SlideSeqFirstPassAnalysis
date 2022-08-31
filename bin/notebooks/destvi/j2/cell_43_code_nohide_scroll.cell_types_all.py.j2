@@ -1,0 +1,13 @@
+{%- block cell_types_all -%}
+sc.settings.figdir = "output"
+sc.settings.file_format_figs = "png" 
+
+sc.pl.embedding(
+   st_adata,
+   basis="spatial",
+   color="CellType",
+   s=3,
+   save=f".cell_type_all",
+   show=True
+   )
+{%- endblock -%}
