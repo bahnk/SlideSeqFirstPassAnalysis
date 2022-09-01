@@ -1,6 +1,6 @@
 
 params: params.csv
 out_dir: results
-project: Test mouse
-scientist: Random Scientist
+project: Test dataset
+scientist: Paul Nurse
 
