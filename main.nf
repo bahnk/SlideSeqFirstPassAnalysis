@@ -130,7 +130,7 @@ def getPaths(map) {//
 
 ////////////
 // nbconvert
-nbconvert_template = Channel.fromPath("assets/jupyter-nbconvert/template.tpl")
+nbconvert_template = Channel.fromPath("$workflow.projectDir/assets/jupyter-nbconvert/template.tpl")
 
 /////////////
 // parameters
@@ -139,44 +139,44 @@ include { params_json } from "./modules/process/params.nf"
 /////////
 // seurat
 include { notebook_r as seurat } from "./modules/process/notebooks.nf"
-render_seurat = Channel.fromPath("bin/notebooks/seurat/render.py")
-j2_seurat = Channel.fromPath("bin/notebooks/seurat/j2")
+render_seurat = Channel.fromPath("$workflow.projectDir/bin/notebooks/seurat/render.py")
+j2_seurat = Channel.fromPath("$workflow.projectDir/bin/notebooks/seurat/j2")
 prefix_seurat = Channel.value("seurat")
 
 ///////
 // rctd
 include { notebook_r as rctd } from "./modules/process/notebooks.nf"
-render_rctd = Channel.fromPath("bin/notebooks/rctd/render.py")
-j2_rctd = Channel.fromPath("bin/notebooks/rctd/j2")
+render_rctd = Channel.fromPath("$workflow.projectDir/bin/notebooks/rctd/render.py")
+j2_rctd = Channel.fromPath("$workflow.projectDir/bin/notebooks/rctd/j2")
 prefix_rctd = Channel.value("rctd")
 
 /////////
 // sparkx
 include { notebook_r as sparkx } from "./modules/process/notebooks.nf"
-render_sparkx = Channel.fromPath("bin/notebooks/sparkx/render.py")
-j2_sparkx = Channel.fromPath("bin/notebooks/sparkx/j2")
+render_sparkx = Channel.fromPath("$workflow.projectDir/bin/notebooks/sparkx/render.py")
+j2_sparkx = Channel.fromPath("$workflow.projectDir/bin/notebooks/sparkx/j2")
 prefix_sparkx = Channel.value("sparkx")
 
 /////////
 // scanpy
 include { notebook_py as scanpy } from "./modules/process/notebooks.nf"
-render_scanpy = Channel.fromPath("bin/notebooks/scanpy/render.py")
-j2_scanpy = Channel.fromPath("bin/notebooks/scanpy/j2")
+render_scanpy = Channel.fromPath("$workflow.projectDir/bin/notebooks/scanpy/render.py")
+j2_scanpy = Channel.fromPath("$workflow.projectDir/bin/notebooks/scanpy/j2")
 prefix_scanpy = Channel.value("scanpy")
 
 /////////
 // destvi
 include { notebook_py_gpu as destvi } from "./modules/process/notebooks.nf"
-render_destvi = Channel.fromPath("bin/notebooks/destvi/render.py")
-j2_destvi = Channel.fromPath("bin/notebooks/destvi/j2")
+render_destvi = Channel.fromPath("$workflow.projectDir/bin/notebooks/destvi/render.py")
+j2_destvi = Channel.fromPath("$workflow.projectDir/bin/notebooks/destvi/j2")
 prefix_destvi = Channel.value("destvi")
 
 ///////////////
 // jupyter_book
 include { jupyter_book } from "./modules/process/report.nf"
-jupyter_book_conf = Channel.fromPath("assets/jupyter-book/conf.py")
-jupyter_book_logo = Channel.fromPath("assets/jupyter-book/logo.jpg")
-jupyter_book_index = Channel.fromPath("assets/jupyter-book/index.md")
+jupyter_book_conf = Channel.fromPath("$workflow.projectDir/assets/jupyter-book/conf.py")
+jupyter_book_logo = Channel.fromPath("$workflow.projectDir/assets/jupyter-book/logo.jpg")
+jupyter_book_index = Channel.fromPath("$workflow.projectDir/assets/jupyter-book/index.md")
 
 ///////////////////////////////////////////////////////////////////////////////
 //// DESIGN ///////////////////////////////////////////////////////////////////
