@@ -6,7 +6,7 @@ The output of the pipeline should be in the directory specified by the `out_dir`
 Each sample has its own directory based on its name.
 Additionally, there are a `params` directory containing the parameters as a `JSON` for each sample, and `_build` directory containing the output of `jupyter-book`:
 
-```bash
+```
 $ ls -l results 
 _build  params  sample1  sample2
 

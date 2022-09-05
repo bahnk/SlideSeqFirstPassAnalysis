@@ -11,14 +11,14 @@ Here is the documentation:
 In a nutshell, first be sure that your singularity config directory is not in your home.
 For example:
 
-```bash
+```
 $ ls -l ~/.singularity
 lrwxrwxrwx 1 username domain users 40 Aug 26  2021 /camp/home/username/.singularity -> /camp/stp/babs/working/username/.singularity
 ```
 
 Then, to test the pipeline it you can just run:
 
-```bash
+```
 # create a new directory and cd in it
 mkdir test
 cd test
