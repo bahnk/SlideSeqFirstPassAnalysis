@@ -64,6 +64,14 @@ param_sparkx_n_cpus
 
 In the following sections we will give more details about the parameters.
 
+ 1. [General parameters](#general-parameters)
+ 2. [File location parameters](#file-location-parameters)
+ 3. [Scanpy parameters](#scanpy-parameters)
+ 4. [Seurat parameters](#seurat-parameters)
+ 5. [DestVI parameters](#destvi-parameters)
+ 6. [RCTD parameters](#rctd-parameters)
+ 7. [SPARK-X parameters](#sparkx-parameters)
+
 ## General parameters
 
  * `name`: name of the sample

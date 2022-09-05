@@ -1,5 +1,5 @@
 
-# Slide-seq FFPE
+# Slide-seq first pass analysis
 
 Here is the documentation:
 

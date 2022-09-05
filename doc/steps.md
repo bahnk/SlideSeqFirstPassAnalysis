@@ -16,7 +16,7 @@ In order to run these packages, the pipeline needs 4 inputs:
  * the count matrix of the reference and its annotation (`path_reference` parameters in the [config file](config.md))
  * all the parameters required by each package (parameters in the [config file](config.md))
 
-The pipeline takes these 4 inputs and create 5 jupyter notebooks containing the code to run each package and will execute, or not depending on the [`execute` parameter](config.md).
+The pipeline takes these 4 inputs and create 5 jupyter notebooks containing the code to run each package and will execute, or not depending on the [`execute`](config.md#general-parameters) parameter.
 Then, the jupyter notebooks will be converted in html.
 The jupyter notebooks will also be converted into the Rmarkdown format.
 Finally, the jupyter notebooks will merged into a html book with [jupyter-book](https://jupyterbook.org/en/stable/intro.html).

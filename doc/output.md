@@ -24,6 +24,6 @@ $ ls results/sample1
 counts  destvi  rctd  reference  scanpy  seurat  sparkx  spatial.csv
 ```
 
- * `counts`, `spatial.csv` and `reference`: the files passed as input in the [CSV configuration file](config.md) (`path_dge`, `path_spatial` and `path_reference` respectively)
+ * `counts`, `spatial.csv` and `reference`: the files passed as input in the [CSV configuration file](config.md#file-location-parameters) (`path_dge`, `path_spatial` and `path_reference` respectively)
  * `destvi`, `rctd`, `scanpy`, `seurat` and `sparkx`: the notebook files with their input and output for each analysis as detailed [here](steps.md).
 
