@@ -19,7 +19,7 @@ wget https://bioinformatics.crick.ac.uk/shiny/users/bahn/slideseq/test_data/para
 ```
 
 Now, you need to parametrise the pipeline as detailed [here](config.md).
-You can either edit the `params.yml` or you can overwrite the parameters with the command line as explained later.
+You can either edit the [`params.yml`](../params.yml) or you can overwrite the parameters with the command line as explained later.
 Normally, you should only have to change the `params` parameter.
 
 We need to load these two modules before running the pipeline:
@@ -30,7 +30,7 @@ module load Nextflow/22.04.0 Singularity/3.6.4
 
 Then, pull the latest version of the pipeline:
 ```bash
-nextflow pull bahnk/SlideSeqFirstPassAnalysis
+nextflow pull bahnk/SlideSeqFirstPassAnalysis -r main
 ```
 
 Finally, you can run the pipeline this way:
