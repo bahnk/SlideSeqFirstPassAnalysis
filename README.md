@@ -19,6 +19,10 @@ lrwxrwxrwx 1 username domain users 40 Aug 26  2021 /camp/home/username/.singular
 Then, to test the pipeline it you can just run:
 
 ```bash
+# create a new directory and cd in it
+mkdir test
+cd test
+
 # download the example parameters files
 wget https://bioinformatics.crick.ac.uk/shiny/users/bahn/slideseq/test_data/params.yml
 wget https://bioinformatics.crick.ac.uk/shiny/users/bahn/slideseq/test_data/params.csv
