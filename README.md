@@ -1,7 +1,6 @@
 
 # Slide-seq FFPE
 
-
 Here is the documentation:
 
  1. [Pipeline steps](doc/steps.md)
@@ -17,10 +16,10 @@ $ ls -l ~/.singularity
 lrwxrwxrwx 1 username domain users 40 Aug 26  2021 /camp/home/username/.singularity -> /camp/stp/babs/working/username/.singularity
 ```
 
-Then, you can just run:
+Then, to test the pipeline it you can just run:
 
 ```bash
-# download the example parmeters file and the probe sequences
+# download the example parameters files
 wget https://bioinformatics.crick.ac.uk/shiny/users/bahn/slideseq/test_data/params.yml
 wget https://bioinformatics.crick.ac.uk/shiny/users/bahn/slideseq/test_data/params.csv
 

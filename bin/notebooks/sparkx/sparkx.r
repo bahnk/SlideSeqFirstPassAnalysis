@@ -2,15 +2,11 @@
 
 # j2 variable string: path_dge
 # j2 variable string: path_spatial 
-# j2 variable float: param_sparkx_percentage
-# j2 variable integer: param_sparkx_min_total_counts
 # j2 variable integer: param_sparkx_n_cpus
 
 j2_name <- "sample1"
 j2_path_dge <- "test/sample1"
 j2_path_spatial  <- "test/sample1.csv"
-j2_param_sparkx_percentage  <- 0.05
-j2_param_sparkx_min_total_counts  <- 10
 j2_param_sparkx_n_cpus <- 12
 
 ###############################################################################
