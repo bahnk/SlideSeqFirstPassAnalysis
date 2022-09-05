@@ -18,10 +18,10 @@ The parameters are the following:
  * `project`: the name of the project or the experiment
  * `scientist`: the name of the scientist
 
-A config file example can be found as `params.yml` in the repository, or can be downloaded [here](https://bioinformatics.crick.ac.uk/shiny/users/bahn/slideseq/test_data/params.yml).
+A config file example can be found as [`params.yml`](../params.yml) in the repository, or can be downloaded [here](https://bioinformatics.crick.ac.uk/shiny/users/bahn/slideseq/test_data/params.yml).
 
 The `CSV` paramters file contains the parameters of the analysis for each sample.
-An example can be found as `params.csv` in the repository, or can be downloaded [here](https://bioinformatics.crick.ac.uk/shiny/users/bahn/slideseq/test_data/params.csv).
+An example can be found as [`params.csv`](../params.csv) in the repository, or can be downloaded [here](https://bioinformatics.crick.ac.uk/shiny/users/bahn/slideseq/test_data/params.csv).
 It should look roughly like this, with samlples as rows and parameters as columns:
 
 ```
