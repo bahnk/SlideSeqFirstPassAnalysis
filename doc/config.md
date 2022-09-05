@@ -82,44 +82,44 @@ The paths can full, relative or as an URL.
 
 These parameters are related to the [Scanpy notebook](https://scanpy-tutorials.readthedocs.io/en/latest/spatial/integration-scanorama.html):
 
- * `param_scanpy_mitochondrial_gene_symbol_prefix`: mitochondrial gene prefix used for the `qc_vars` parameter of the [`calculate_qc_metrics` function](https://scanpy.readthedocs.io/en/stable/generated/scanpy.pp.calculate_qc_metrics.html#scanpy.pp.calculate_qc_metrics) function (usually it's `MT-` or `mt-`)
+ * `param_scanpy_mitochondrial_gene_symbol_prefix`: mitochondrial gene prefix used for the `qc_vars` parameter of the [`calculate_qc_metrics`](https://scanpy.readthedocs.io/en/stable/generated/scanpy.pp.calculate_qc_metrics.html#scanpy.pp.calculate_qc_metrics) function (usually it's `MT-` or `mt-`)
  * `param_scanpy_min_genes`: threshold to filter beads expressing too few genes
  * `param_scanpy_max_genes`: threshold to filter beads expressing too many genes
  * `param_scanpy_max_pct_mitoch`: threshold to filter beads expressing a high mitochondrial activity
  * `param_scanpy_min_cells`: threshold to filter genes expressed in too few beads
- * `param_scanpy_clusters_resolution`: `resolution` parameter of the [`leiden` function](https://scanpy.readthedocs.io/en/stable/generated/scanpy.tl.leiden.html#scanpy.tl.leiden.)
+ * `param_scanpy_clusters_resolution`: `resolution` parameter of the [`leiden`](https://scanpy.readthedocs.io/en/stable/generated/scanpy.tl.leiden.html#scanpy.tl.leiden.) function
 
 ## Seurat parameters
 
 These parameters are related to the [Seurat notebook](https://satijalab.org/seurat/articles/spatial_vignette.html#slide-seq-1):
 
- * `param_seurat_mitochondrial_gene_symbol_prefix`: mitochondrial gene prefix used for the `pattern` parameter when running the [`PercentageFeatureSet` function](https://satijalab.org/seurat/reference/percentagefeatureset) (usually `MT-` or `mt-`)
+ * `param_seurat_mitochondrial_gene_symbol_prefix`: mitochondrial gene prefix used for the `pattern` parameter when running the [`PercentageFeatureSet`](https://satijalab.org/seurat/reference/percentagefeatureset) function (usually `MT-` or `mt-`)
  * `param_seurat_max_percentage_mitochondria`: threshold to filter beads expressing a high mitochondrial activity
  * `param_seurat_min_gene_count`: threshold to filter beads expressing too few genes
- * `param_seurat_sctransform_n_cells`: `ncells` parameter of the [`SCTranform` function](https://satijalab.org/seurat/reference/sctransform)
- * `param_seurat_n_components`: `dims` parameter for both [`RunUMAP` function](https://satijalab.org/seurat/reference/runumap) and  [`FindNeighbors` function](https://satijalab.org/seurat/reference/findneighbors)
- * `param_seurat_clusters_resolution`: `resolution` parameter for the [`FindClusters` function](https://satijalab.org/seurat/reference/findclusters)
+ * `param_seurat_sctransform_n_cells`: `ncells` parameter of the [`SCTranform`](https://satijalab.org/seurat/reference/sctransform) function
+ * `param_seurat_n_components`: `dims` parameter for both [`RunUMAP`](https://satijalab.org/seurat/reference/runumap) function and  [`FindNeighbors`](https://satijalab.org/seurat/reference/findneighbors) function
+ * `param_seurat_clusters_resolution`: `resolution` parameter for the [`FindClusters`](https://satijalab.org/seurat/reference/findclusters) function
  * `param_seurat_n_cpus`: number of cpus to use when parallelizing `Seurat` with [`BiocParallel`](https://bioconductor.org/packages/release/bioc/html/BiocParallel.html) and [`future`](https://cran.r-project.org/web/packages/future/vignettes/future-1-overview.html)
- * `param_seurat_memory`: value used to set the `future.globals.maxSize` parameters of the [`options` function](https://stat.ethz.ch/R-manual/R-devel/library/base/html/options.html)
+ * `param_seurat_memory`: value used to set the `future.globals.maxSize` parameters of the [`options`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/options.html) function
 
 ## DestVI parameters
 
 These parameters are related to the [DestVI notebook](https://docs.scvi-tools.org/en/stable/tutorials/notebooks/DestVI_tutorial.html):
 
- * `param_destvi_min_counts`: `min_counts` parameter of the [`filter_genes` function](https://scanpy.readthedocs.io/en/stable/generated/scanpy.pp.filter_genes.html#scanpy.pp.filter_genes)
- * `param_destvi_n_variable_genes`: `n_top_genes` of the [`highly_variable_genes` function](https://scanpy.readthedocs.io/en/stable/generated/scanpy.pp.highly_variable_genes.html)
+ * `param_destvi_min_counts`: `min_counts` parameter of the [`filter_genes`](https://scanpy.readthedocs.io/en/stable/generated/scanpy.pp.filter_genes.html#scanpy.pp.filter_genes) function
+ * `param_destvi_n_variable_genes`: `n_top_genes` of the [`highly_variable_genes`](https://scanpy.readthedocs.io/en/stable/generated/scanpy.pp.highly_variable_genes.html) function
  * `param_destvi_test`: running `DestVI` in test mode (`true` or `false`)
 
 ## RCTD parameters
 
 These parameters are related to the [RCTD notebook](https://raw.githack.com/dmcable/spacexr/master/vignettes/spatial-transcriptomics.html):
 
- * `param_rctd_n_cpus`: `max_cores` parameter of the [`create.RCTD` function](https://rdrr.io/github/dmcable/RCTD/man/create.RCTD.html)
- * `param_rctd_mode`: `doublet_mode` parameter of the [`run.RCTD` function](https://rdrr.io/github/dmcable/RCTD/man/run.RCTD.html)
+ * `param_rctd_n_cpus`: `max_cores` parameter of the [`create.RCTD`](https://rdrr.io/github/dmcable/RCTD/man/create.RCTD.html) function
+ * `param_rctd_mode`: `doublet_mode` parameter of the [`run.RCTD`](https://rdrr.io/github/dmcable/RCTD/man/run.RCTD.html) function
 
 ## SPARK-X parameters
 
 These parameters are related to the [SPARK-X notebook](https://xzhoulab.github.io/SPARK/02_SPARK_Example/):
 
- * `param_sparkx_n_cpus`: `numCores` parameter of the [`sparkx` function](https://xzhoulab.github.io/SPARK/02_SPARK_Example/)
+ * `param_sparkx_n_cpus`: `numCores` parameter of the [`sparkx`](https://xzhoulab.github.io/SPARK/02_SPARK_Example/) function
 
