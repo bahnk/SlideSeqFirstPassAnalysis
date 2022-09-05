@@ -70,7 +70,7 @@ In the following sections we will give more details about the parameters.
  4. [Seurat parameters](#seurat-parameters)
  5. [DestVI parameters](#destvi-parameters)
  6. [RCTD parameters](#rctd-parameters)
- 7. [SPARK-X parameters](#sparkx-parameters)
+ 7. [SPARK-X parameters](#spark-x-parameters)
 
 ## General parameters
 
