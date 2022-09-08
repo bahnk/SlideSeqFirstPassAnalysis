@@ -1,9 +1,6 @@
 {%- block load -%}
-spatial = pd\
-   .read_csv("{{ path_spatial }}")\
-   .rename(columns={"PuckBarcode": "Barcode"})\
-   .set_index("SeqBarcode")
+spatial = pd.read_csv("{{ path_spatial }}").set_index("Barcode")
 
-adata = sc.read_10x_mtx("{{ path_dge }}")
+adata = sc.read_10x_mtx("{{ path_dge }}", var_names="{{ param_scanpy_gene_identifier }}")
 adata.obs = spatial.loc[ adata.obs.index ]
 {%- endblock -%}

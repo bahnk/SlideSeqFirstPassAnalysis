@@ -5,6 +5,7 @@
 # j2 variable string: name
 # j2 variable string: path_dge
 # j2 variable string: path_spatial 
+# j2 variable string: param_scanpy_gene_identifier
 # j2 variable string: param_scanpy_mitochondrial_gene_symbol_prefix
 # j2 variable value: param_scanpy_min_genes
 # j2 variable value: param_scanpy_max_genes
@@ -15,6 +16,7 @@
 j2_name = "sample1"
 j2_path_dge = "test/sample1"
 j2_path_spatial = "test/sample1.csv"
+j2_param_scanpy_gene_identifier = "gene_symbols"
 j2_param_scanpy_mitochondrial_gene_symbol_prefix = "mt-"
 j2_param_scanpy_min_genes = 5
 j2_param_scanpy_max_genes = np.infty
@@ -122,12 +124,9 @@ We load the digital expression matrix and the spatial information and create an 
 ###############################################################################
 # cell python nohide scroll: load
 
-spatial = pd\
-	.read_csv(j2_path_spatial)\
-	.rename(columns={"PuckBarcode": "Barcode"})\
-	.set_index("SeqBarcode")
+spatial = pd.read_csv(j2_path_spatial).set_index("Barcode")
 
-adata = sc.read_10x_mtx(j2_path_dge)
+adata = sc.read_10x_mtx(j2_path_dge, var_names=j2_param_scanpy_gene_identifier)
 adata.obs = spatial.loc[ adata.obs.index ]
 # cell python nohide scroll: load
 
