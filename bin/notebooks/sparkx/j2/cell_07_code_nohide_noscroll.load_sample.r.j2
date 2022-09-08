@@ -1,10 +1,9 @@
 {%- block load_sample -%}
-counts <- Seurat::Read10X("{{ path_dge }}")
+counts <- Seurat::Read10X("{{ path_dge }}", gene.column={{ param_sparkx_gene_column }})
 
 spatial <-
     readr::read_csv("{{ path_spatial }}") %>%
-    dplyr::select(SeqBarcode, x, y) %>%
-    tibble::column_to_rownames("SeqBarcode")
+    tibble::column_to_rownames("Barcode")
 
 spatial <- spatial[colnames(counts),]
 {%- endblock -%}

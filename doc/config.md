@@ -40,12 +40,14 @@ execute
 path_dge
 path_spatial
 path_reference
+param_scanpy_gene_identifier
 param_scanpy_mitochondrial_gene_symbol_prefix
 param_scanpy_min_genes
 param_scanpy_max_genes
 param_scanpy_max_pct_mitoch
 param_scanpy_min_cells
 param_scanpy_clusters_resolution
+param_seurat_gene_column
 param_seurat_mitochondrial_gene_symbol_prefix
 param_seurat_max_percentage_mitochondria
 param_seurat_min_gene_count
@@ -54,11 +56,14 @@ param_seurat_n_components
 param_seurat_clusters_resolution
 param_seurat_n_cpus
 param_seurat_memory
+param_destvi_gene_identifier
 param_destvi_min_counts
 param_destvi_n_variable_genes
 param_destvi_test
+param_rctd_gene_column
 param_rctd_n_cpus
 param_rctd_mode
+param_sparkx_gene_column
 param_sparkx_n_cpus
 ```
 
@@ -90,6 +95,7 @@ The paths can full, relative or as an URL.
 
 These parameters are related to the [Scanpy notebook](https://scanpy-tutorials.readthedocs.io/en/latest/spatial/integration-scanorama.html):
 
+ * `param_scanpy_gene_identifier`: `var_names` parameter of the [`read_10x_mtx`](https://scanpy.readthedocs.io/en/stable/generated/scanpy.read_10x_mtx.html) function (`gene_symbols` or `gene_ids`)
  * `param_scanpy_mitochondrial_gene_symbol_prefix`: mitochondrial gene prefix used for the `qc_vars` parameter of the [`calculate_qc_metrics`](https://scanpy.readthedocs.io/en/stable/generated/scanpy.pp.calculate_qc_metrics.html#scanpy.pp.calculate_qc_metrics) function (usually it's `MT-` or `mt-`)
  * `param_scanpy_min_genes`: threshold to filter beads expressing too few genes
  * `param_scanpy_max_genes`: threshold to filter beads expressing too many genes
@@ -101,6 +107,7 @@ These parameters are related to the [Scanpy notebook](https://scanpy-tutorials.r
 
 These parameters are related to the [Seurat notebook](https://satijalab.org/seurat/articles/spatial_vignette.html#slide-seq-1):
 
+ * `param_seurat_gene_column`: `gene.column` parameter of the [`Read10X`](https://satijalab.org/seurat/reference/read10x) function (`1` or `2`)
  * `param_seurat_mitochondrial_gene_symbol_prefix`: mitochondrial gene prefix used for the `pattern` parameter when running the [`PercentageFeatureSet`](https://satijalab.org/seurat/reference/percentagefeatureset) function (usually `MT-` or `mt-`)
  * `param_seurat_max_percentage_mitochondria`: threshold to filter beads expressing a high mitochondrial activity
  * `param_seurat_min_gene_count`: threshold to filter beads expressing too few genes
@@ -114,6 +121,7 @@ These parameters are related to the [Seurat notebook](https://satijalab.org/seur
 
 These parameters are related to the [DestVI notebook](https://docs.scvi-tools.org/en/stable/tutorials/notebooks/DestVI_tutorial.html):
 
+ * `param_destvi_gene_identifier`: `var_names` parameter of the [`read_10x_mtx`](https://scanpy.readthedocs.io/en/stable/generated/scanpy.read_10x_mtx.html) function (`gene_symbols` or `gene_ids`)
  * `param_destvi_min_counts`: `min_counts` parameter of the [`filter_genes`](https://scanpy.readthedocs.io/en/stable/generated/scanpy.pp.filter_genes.html#scanpy.pp.filter_genes) function
  * `param_destvi_n_variable_genes`: `n_top_genes` of the [`highly_variable_genes`](https://scanpy.readthedocs.io/en/stable/generated/scanpy.pp.highly_variable_genes.html) function
  * `param_destvi_test`: running `DestVI` in test mode (`true` or `false`)
@@ -122,6 +130,8 @@ These parameters are related to the [DestVI notebook](https://docs.scvi-tools.or
 
 These parameters are related to the [RCTD notebook](https://raw.githack.com/dmcable/spacexr/master/vignettes/spatial-transcriptomics.html):
 
+ * `param_rctd_gene_column`: `gene.column` parameter of the [`Read10X`](https://satijalab.org/seurat/reference/read10x) function (`1` or `2`)
+ * `param_seurat_mitochondrial_gene_symbol_prefix`: mitochondrial gene prefix used for the `pattern` parameter when running the [`PercentageFeatureSet`](https://satijalab.org/seurat/reference/percentagefeatureset) function (usually `MT-` or `mt-`)
  * `param_rctd_n_cpus`: `max_cores` parameter of the [`create.RCTD`](https://rdrr.io/github/dmcable/RCTD/man/create.RCTD.html) function
  * `param_rctd_mode`: `doublet_mode` parameter of the [`run.RCTD`](https://rdrr.io/github/dmcable/RCTD/man/run.RCTD.html) function
 
@@ -129,5 +139,6 @@ These parameters are related to the [RCTD notebook](https://raw.githack.com/dmca
 
 These parameters are related to the [SPARK-X notebook](https://xzhoulab.github.io/SPARK/02_SPARK_Example/):
 
+ * `param_sparkx_gene_column`: `gene.column` parameter of the [`Read10X`](https://satijalab.org/seurat/reference/read10x) function (`1` or `2`)
  * `param_sparkx_n_cpus`: `numCores` parameter of the [`sparkx`](https://xzhoulab.github.io/SPARK/02_SPARK_Example/) function
 

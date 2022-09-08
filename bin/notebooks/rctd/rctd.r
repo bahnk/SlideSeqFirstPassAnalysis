@@ -3,12 +3,14 @@
 # j2 variable string: path_reference
 # j2 variable string: path_dge
 # j2 variable string: path_spatial 
+# j2 variable integer: param_rctd_gene_column
 # j2 variable integer: param_rctd_n_cpus
 # j2 variable string: param_rctd_mode
 
 j2_path_reference <- "results/sample1/reference"
 j2_path_dge <- "test/sample1"
 j2_path_spatial  <- "test/sample1.csv"
+j2_param_rctd_gene_column <- 2
 j2_param_rctd_n_cpus <- 12
 j2_param_rctd_mode <- "doublet"
 
@@ -67,7 +69,7 @@ We load the digital expression matrix and the cell types for the reference.
 ###############################################################################
 # cell r nohide noscroll: load_reference
 
-ref_counts <- Seurat::Read10X(j2_path_reference)
+ref_counts <- Seurat::Read10X(j2_path_reference, gene.column=j2_param_rctd_gene_column)
 
 cell_types <-
 	readr::read_tsv(file.path(j2_path_reference, "types.tsv.gz"), col_names=F) %>%
@@ -108,14 +110,13 @@ We load the digital expression matrix and the spatial information of the sample.
 ###############################################################################
 # cell r nohide noscroll: load_sample
 
-counts <- Seurat::Read10X(j2_path_dge)
+counts <- Seurat::Read10X(j2_path_dge, gene.column=j2_param_rctd_gene_column)
 
 nUMIs <- colSums(counts)
 
 spatial <-
     readr::read_csv(j2_path_spatial) %>%
-    dplyr::select(SeqBarcode, x, y) %>%
-    tibble::column_to_rownames("SeqBarcode")
+    tibble::column_to_rownames("Barcode")
 
 spatial <- spatial[colnames(counts),]
 

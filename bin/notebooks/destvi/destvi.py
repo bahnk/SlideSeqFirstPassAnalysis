@@ -6,14 +6,16 @@
 # j2 variable string: path_dge
 # j2 variable string: path_spatial 
 # j2 variable string: path_reference
+# j2 variable string: param_destvi_gene_identifier
 # j2 variable integer: param_destvi_min_counts
 # j2 variable integer: param_destvi_n_variable_genes
 # j2 variable bool: param_destvi_test
 
 j2_name = "sample1"
-j2_path_dge = "test/sample1"
-j2_path_spatial = "test/sample1.csv"
-j2_path_reference = "results/sample1/reference"
+j2_path_dge = "test/data/sample1"
+j2_path_spatial = "test/data/sample1.csv"
+j2_path_reference = "test/data/reference"
+j2_param_destvi_gene_identifier = "gene_symbols"
 j2_param_destvi_min_counts = 10
 j2_param_destvi_n_variable_genes = 2000
 j2_param_destvi_test = True
@@ -141,7 +143,7 @@ We load the single-cell reference dataset.
 
 ###############################################################################
 # cell python nohide scroll: reference_load
-sc_adata = sc.read_10x_mtx(j2_path_reference)
+sc_adata = sc.read_10x_mtx(j2_path_reference, var_names=j2_param_destvi_gene_identifier)
 
 args = {
 	"filepath_or_buffer": join(j2_path_reference, "types.tsv.gz"),
@@ -268,12 +270,9 @@ We load the sample count and spatial data and create an AnnData object.
 
 ###############################################################################
 # cell python nohide scroll: sample_load
-spatial = pd\
-	.read_csv(j2_path_spatial)\
-	.rename(columns={"PuckBarcode": "Barcode"})\
-	.set_index("SeqBarcode")
+spatial = pd.read_csv(j2_path_spatial).set_index("Barcode")
 
-st_adata = sc.read_10x_mtx(j2_path_dge)
+st_adata = sc.read_10x_mtx(j2_path_dge, var_names=j2_param_destvi_gene_identifier)
 st_adata.obs = spatial.loc[ st_adata.obs.index ]
 st_adata = st_adata[ : , ~ np.all(st_adata.X.toarray() == 0, axis=0) ]
 # cell python nohide scroll: sample_load

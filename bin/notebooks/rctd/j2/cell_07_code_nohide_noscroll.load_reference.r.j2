@@ -1,5 +1,5 @@
 {%- block load_reference -%}
-ref_counts <- Seurat::Read10X("{{ path_reference }}")
+ref_counts <- Seurat::Read10X("{{ path_reference }}", gene.column={{ param_rctd_gene_column }})
 
 cell_types <-
    readr::read_tsv(file.path("{{ path_reference }}", "types.tsv.gz"), col_names=F) %>%

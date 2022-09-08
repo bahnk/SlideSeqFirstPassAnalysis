@@ -1,5 +1,5 @@
 {%- block reference_load -%}
-sc_adata = sc.read_10x_mtx("{{ path_reference }}")
+sc_adata = sc.read_10x_mtx("{{ path_reference }}", var_names="{{ param_destvi_gene_identifier }}")
 
 args = {
    "filepath_or_buffer": join("{{ path_reference }}", "types.tsv.gz"),

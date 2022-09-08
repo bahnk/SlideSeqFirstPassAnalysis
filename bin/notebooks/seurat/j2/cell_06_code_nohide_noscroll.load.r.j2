@@ -1,13 +1,13 @@
 {%- block load -%}
-counts <- Seurat::Read10X("{{ path_dge }}")
+counts <- Seurat::Read10X("{{ path_dge }}", gene.column={{ param_seurat_gene_column }})
 
 spatial <-
    readr::read_csv("{{ path_spatial }}") %>%
-   dplyr::filter( SeqBarcode %in% colnames(counts) ) %>%
-   dplyr::arrange(SeqBarcode) %>%
-   tibble::column_to_rownames("SeqBarcode")
+   dplyr::filter( Barcode %in% colnames(counts) ) %>%
+   dplyr::arrange(Barcode) %>%
+   tibble::column_to_rownames("Barcode")
 
-stopifnot( sum( ! spatial$SeqBarcode == colnames(counts) ) == 0 )
+stopifnot( sum( ! spatial$Barcode == colnames(counts) ) == 0 )
 
 args <- list("project"="{{ name }}", "assay"="Spatial", "meta.data"=spatial)
 obj <- do.call(SeuratObject::CreateSeuratObject, c(counts, args))

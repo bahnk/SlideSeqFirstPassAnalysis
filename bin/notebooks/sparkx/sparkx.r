@@ -2,11 +2,13 @@
 
 # j2 variable string: path_dge
 # j2 variable string: path_spatial 
+# j2 variable integer: param_sparkx_gene_column
 # j2 variable integer: param_sparkx_n_cpus
 
 j2_name <- "sample1"
 j2_path_dge <- "test/sample1"
 j2_path_spatial  <- "test/sample1.csv"
+j2_param_sparkx_gene_column <- 2
 j2_param_sparkx_n_cpus <- 12
 
 ###############################################################################
@@ -64,12 +66,11 @@ We load the digital expression matrix and the spatial information of the sample.
 ###############################################################################
 # cell r nohide noscroll: load_sample
 
-counts <- Seurat::Read10X(j2_path_dge)
+counts <- Seurat::Read10X(j2_path_dge, gene.column=j2_param_sparkx_gene_column)
 
 spatial <-
     readr::read_csv(j2_path_spatial) %>%
-    dplyr::select(SeqBarcode, x, y) %>%
-    tibble::column_to_rownames("SeqBarcode")
+    tibble::column_to_rownames("Barcode")
 
 spatial <- spatial[colnames(counts),]
 # cell r nohide noscroll: load_sample

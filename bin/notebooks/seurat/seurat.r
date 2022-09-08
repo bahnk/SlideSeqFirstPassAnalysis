@@ -3,6 +3,7 @@
 # j2 variable string: name
 # j2 variable string: path_dge
 # j2 variable string: path_spatial 
+# j2 variable integer: param_seurat_gene_column
 # j2 variable string: param_seurat_mitochondrial_gene_symbol_prefix
 # j2 variable float: param_seurat_max_percentage_mitochondria
 # j2 variable integer: param_seurat_min_gene_count
@@ -15,6 +16,7 @@
 j2_name <- "210709_26"
 j2_path_dge <- "../results/210709_26_dge"
 j2_path_spatial  <- "../results/210709_26.csv"
+j2_param_seurat_gene_column <- 2
 j2_param_seurat_mitochondrial_gene_symbol_prefix <- "^mt-"
 j2_param_seurat_max_percentage_mitochondria <- 30
 j2_param_seurat_min_gene_count <- 10
@@ -74,15 +76,15 @@ We load the digital expression matrix and the spatial information and create an 
 ###############################################################################
 # cell r nohide noscroll: load
 
-counts <- Seurat::Read10X(j2_path_dge)
+counts <- Seurat::Read10X(j2_path_dge, gene.column=j2_param_seurat_gene_column)
 
 spatial <-
 	readr::read_csv(j2_path_spatial) %>%
-	dplyr::filter( SeqBarcode %in% colnames(counts) ) %>%
-	dplyr::arrange(SeqBarcode) %>%
-	tibble::column_to_rownames("SeqBarcode")
+	dplyr::filter( Barcode %in% colnames(counts) ) %>%
+	dplyr::arrange(Barcode) %>%
+	tibble::column_to_rownames("Barcode")
 
-stopifnot( sum( ! spatial$SeqBarcode == colnames(counts) ) == 0 )
+stopifnot( sum( ! spatial$Barcode == colnames(counts) ) == 0 )
 
 args <- list("project"=j2_name, "assay"="Spatial", "meta.data"=spatial)
 obj <- do.call(SeuratObject::CreateSeuratObject, c(counts, args))
