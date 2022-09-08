@@ -56,7 +56,7 @@ $ zcat test/data/sample1/matrix.mtx.gz | head -n 6
 ```
 
 Please note that the first column of `features.tsv.gz` is the gene ID and the second one is the gene symbol.
-It has to be this way because this is what the [`read_10x_mtx`](https://scanpy.readthedocs.io/en/stable/generated/scanpy.read_10x_mtx.html) and [`Read10X`](https://satijalab.org/seurat/reference/read10x) functions are expecting.
+It has to be this way because this is what the [`read_10x_mtx`](https://scanpy.readthedocs.io/en/stable/generated/scanpy.read_10x_mtx.html) and [`Read10X`](https://satijalab.org/seurat/reference/read10x) functions both expect.
 The same comment applies to the reference dataset.
 
 The single-cell reference dataset has an additional file named `types.tsv.gz` which stores the cell types associated with each barcodes:
