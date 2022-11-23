@@ -1,0 +1,11 @@
+
+name: rctd
+
+parameters:
+  - {name: path_reference, type: path, default: test/data/reference, specific: false}
+  - {name: path_dge, type: path, default: test/data/sample1, specific: false}
+  - {name: path_spatial, type: path, default: test/data/sample1.csv, specific: false}
+  - {name: param_rctd_gene_column, type: integer, default: 2, specific: true}
+  - {name: param_rctd_n_cpus, type: integer, default: 12, specific: true}
+  - {name: param_rctd_mode, type: string, default: doublet, specific: true}
+

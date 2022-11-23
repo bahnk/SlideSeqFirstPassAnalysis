@@ -63,7 +63,8 @@ def main(in_dir, out_dir, args):#
 		for notebook in d.File:
 			part["chapters"].append( {"file": notebook} )
 	
-		toc["parts"].append(part)
+		if len( part["chapters"] ) > 0:
+			toc["parts"].append(part)
 	
 	f = open(join(out_dir, "_toc.yml"), "w")
 	f.write( yaml.dump(toc, sort_keys=False) )

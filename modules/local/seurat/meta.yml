@@ -1,0 +1,17 @@
+
+name: seurat
+
+parameters:
+  - {name: name, type: string, default: sample1, specific: false}
+  - {name: path_dge, type: path, default: test/data/sample1, specific: false}
+  - {name: path_spatial, type: path, default: test/data/sample1.csv, specific: false}
+  - {name: param_seurat_gene_column, type: integer, default: 2, specific: true}
+  - {name: param_seurat_mitochondrial_gene_symbol_prefix, type: string, default: "^mt-", specific: true}
+  - {name: param_seurat_max_percentage_mitochondria, type: float, default: 30, specific: true}
+  - {name: param_seurat_min_gene_count, type: integer, default: 10, specific: true}
+  - {name: param_seurat_sctransform_n_cells, type: integer, default: 3000, specific: true}
+  - {name: param_seurat_n_components, type: integer, default: 10, specific: true}
+  - {name: param_seurat_clusters_resolution, type: float, default: 0.2, specific: true}
+  - {name: param_seurat_n_cpus, type: integer, default: 12, specific: true}
+  - {name: param_seurat_memory, type: integer, default: 5000, specific: true}
+

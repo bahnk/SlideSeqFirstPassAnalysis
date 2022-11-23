@@ -1,0 +1,13 @@
+
+name: destvi
+
+parameters:
+  - {name: name, type: string, default: sample1, specific: false}
+  - {name: path_reference, type: path, default: test/data/reference, specific: false}
+  - {name: path_dge, type: path, default: test/data/sample1, specific: false}
+  - {name: path_spatial, type: path, default: test/data/sample1.csv, specific: false}
+  - {name: param_destvi_gene_identifier, type: string, default: gene_symbols, specific: true}
+  - {name: param_destvi_min_counts, type: integer, default: 10, specific: true}
+  - {name: param_destvi_n_variable_genes, type: integer, default: 2000, specific: true}
+  - {name: param_destvi_test, type: boolean, default: false, specific: true}
+

@@ -12,7 +12,8 @@ include {
 	addValue;
 	removeKeys;
 	toBoolean;
-	getDataPaths
+	getDataPaths;
+	checkAllParams
 	} from "./modules/utils.nf"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -71,6 +72,13 @@ jupyter_book_index = Channel.fromPath("$workflow.projectDir/assets/jupyter-book/
 ///////////////////////////////////////////////////////////////////////////////
 //// DESIGN ///////////////////////////////////////////////////////////////////
 
+scanpy_meta = "$workflow.projectDir/modules/local/scanpy/meta.yml"
+seurat_meta = "$workflow.projectDir/modules/local/seurat/meta.yml"
+rctd_meta = "$workflow.projectDir/modules/local/rctd/meta.yml"
+destvi_meta = "$workflow.projectDir/modules/local/destvi/meta.yml"
+sparkx_meta = "$workflow.projectDir/modules/local/sparkx/meta.yml"
+metas = [scanpy_meta, seurat_meta, rctd_meta, destvi_meta, sparkx_meta]
+
 Channel
 	.fromPath(params.params)
 	.splitCsv(header: true)
@@ -78,6 +86,17 @@ Channel
 	.map{ getDataPaths(it) }
 	.map{ [ addValue(it[0], "project", params.project) , it[1] ] }
 	.map{ [ addValue(it[0], "scientist", params.scientist) , it[1] ] }
+	.map{ [
+		[
+			"name": it[0].name,
+			"execute": it[0].execute,
+			"execution": [:],
+			"parameters": removeKeys(it[0], ["execute"])
+		],
+		it[1],
+		metas
+	] }
+	.map{ checkAllParams(it) }
 	.set{SAMPLES}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -90,6 +109,7 @@ workflow {
 	seurat(
 		params_json
 			.out
+			.filter{ it[0]["execution"]["seurat"] }
 			.combine(prefix_seurat)
 			.combine(render_seurat)
 			.combine(j2_seurat)
@@ -98,6 +118,7 @@ workflow {
 	rctd(
 		params_json
 			.out
+			.filter{ it[0]["execution"]["rctd"] }
 			.combine(prefix_rctd)
 			.combine(render_rctd)
 			.combine(j2_rctd)
@@ -106,6 +127,7 @@ workflow {
 	sparkx(
 		params_json
 			.out
+			.filter{ it[0]["execution"]["sparkx"] }
 			.combine(prefix_sparkx)
 			.combine(render_sparkx)
 			.combine(j2_sparkx)
@@ -114,6 +136,7 @@ workflow {
 	scanpy(
 		params_json
 			.out
+			.filter{ it[0]["execution"]["scanpy"] }
 			.combine(prefix_scanpy)
 			.combine(render_scanpy)
 			.combine(j2_scanpy)
@@ -123,6 +146,7 @@ workflow {
 	destvi(
 		params_json
 			.out
+			.filter{ it[0]["execution"]["destvi"] }
 			.combine(prefix_destvi)
 			.combine(render_destvi)
 			.combine(j2_destvi)

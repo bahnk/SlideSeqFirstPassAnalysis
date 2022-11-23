@@ -25,7 +25,7 @@ process params_json {
 		
 		def map = [:]
 
-		metadata.each{
+		metadata.parameters.each{
 
 			if ( ["true", "false"].contains( it.value.toString().toLowerCase() ) )
 			{

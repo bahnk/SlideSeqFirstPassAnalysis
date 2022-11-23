@@ -1,0 +1,15 @@
+*.sif
+*.swp
+.nextflow*
+book
+jupyter
+lab
+nextflow/*
+output/*
+publish
+results/*
+run
+selenium
+test/data/*
+tmp/*
+work/*

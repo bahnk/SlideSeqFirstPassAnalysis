@@ -1,0 +1,15 @@
+
+name: scanpy
+
+parameters:
+  - {name: name, type: string, default: sample1, specific: false}
+  - {name: path_dge, type: path, default: test/data/sample1, specific: false}
+  - {name: path_spatial, type: path, default: test/data/sample1.csv, specific: false}
+  - {name: param_scanpy_gene_identifier, type: string, default: "gene_symbols", specific: true}
+  - {name: param_scanpy_mitochondrial_gene_symbol_prefix, type: string, default: "mt-", specific: true}
+  - {name: param_scanpy_min_genes, type: integer, default: 5, specific: true}
+  - {name: param_scanpy_max_genes, type: string, default: "np.infty", specific: true}
+  - {name: param_scanpy_max_pct_mitoch, type: float, default: 30, specific: true}
+  - {name: param_scanpy_min_cells, type: integer, default: 10, specific: true}
+  - {name: param_scanpy_clusters_resolution, type: float, default: 0.2, specific: true}
+

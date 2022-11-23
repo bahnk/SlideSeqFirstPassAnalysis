@@ -5,7 +5,6 @@
 # j2 variable integer: param_sparkx_gene_column
 # j2 variable integer: param_sparkx_n_cpus
 
-j2_name <- "sample1"
 j2_path_dge <- "test/sample1"
 j2_path_spatial  <- "test/sample1.csv"
 j2_param_sparkx_gene_column <- 2
