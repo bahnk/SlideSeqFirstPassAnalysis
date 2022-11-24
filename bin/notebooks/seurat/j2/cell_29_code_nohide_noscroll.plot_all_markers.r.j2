@@ -1,33 +1,36 @@
 {%- block plot_all_markers -%}
-markers %>%
-   dplyr::group_by(cluster) %>%
-   dplyr::group_map(function(x, n) {
-
-      df <-
-         x %>%
-         dplyr::arrange(dplyr::desc(avg_log2FC) ) %>%
-         dplyr::top_n( max(6, nrow(x)) )
-
-      genes <- df$gene
-
-      for ( gene in genes ) {
-
-         g <- Seurat::FeaturePlot(obj, features=gene, ncol=1)
-         g <- g + patchwork::plot_annotation(title=paste0("Cluster ", n))
-
-         ggplot2::ggsave(
-            filename=sprintf("output/markers_cluster_%s_gene_%s.png", n, gene),
-            plot=g,
-            height=3, width=3.5, dpi=200
-            )
-
-         ggplot2::ggsave(
-            filename=sprintf("output/markers_cluster_%s_gene_%s.pdf", n, gene),
-            plot=g,
-            height=3, width=3.5, dpi=200
-            )
-
-         print(g)
-      }
-   })
+if ( nrow(markers) > 0 )
+{
+   markers %>%
+      dplyr::group_by(cluster) %>%
+      dplyr::group_map(function(x, n) {
+   
+         df <-
+            x %>%
+            dplyr::arrange(dplyr::desc(avg_log2FC) ) %>%
+            dplyr::top_n( max(6, nrow(x)) )
+   
+         genes <- df$gene
+   
+         for ( gene in genes ) {
+   
+            g <- Seurat::FeaturePlot(obj, features=gene, ncol=1)
+            g <- g + patchwork::plot_annotation(title=paste0("Cluster ", n))
+   
+            ggplot2::ggsave(
+               filename=sprintf("output/markers_cluster_%s_gene_%s.png", n, gene),
+               plot=g,
+               height=3, width=3.5, dpi=200
+               )
+   
+            ggplot2::ggsave(
+               filename=sprintf("output/markers_cluster_%s_gene_%s.pdf", n, gene),
+               plot=g,
+               height=3, width=3.5, dpi=200
+               )
+   
+            print(g)
+         }
+      })
+}
 {%- endblock -%}
