@@ -167,9 +167,10 @@ plots = [
 tab_content = []
 tab_titles = []
 
+n = min(adata.obs.shape[0], 3000)
+
 for column, title in plots:
 
-	n = min(adata.obs.shape[0], 3000)
 	fig = px.violin(adata.obs.sample(n), y=column, box=True, points="all")
 	fig.write_image( join("output", f"qc_beads.{column}.pdf") )
 	fig.write_image( join("output", f"qc_beads.{column}.png") )
@@ -182,7 +183,7 @@ for column, title in plots:
 	tab_content.append( go.FigureWidget(fig) )
 	tab_titles.append(f"{title} (xy)")
 
-fig = px.scatter(adata.obs.sample(2000), x="total_counts", y="n_genes_by_counts")
+fig = px.scatter(adata.obs.sample(n), x="total_counts", y="n_genes_by_counts")
 fig.write_image( join("output", "total_counts_VS_n_genes_by_counts.png") )
 fig.write_image( join("output", "total_counts_VS_n_genes_by_counts.pdf") )
 
@@ -233,8 +234,10 @@ plots = [
 	("pct_dropout_by_counts", "Dropout")
 ]
 
+n = min(adata.obs.shape[0], 3000)
+
 for column, title in plots:
-	fig = px.violin(adata.var.sample(2000), y=column, box=True, points="all")
+	fig = px.violin(adata.var.sample(n), y=column, box=True, points="all")
 	fig.write_image( join("output", f"qc_genes.{column}.pdf") )
 	fig.write_image( join("output", f"qc_genes.{column}.png") )
 	tab_content.append( go.FigureWidget(fig) )
@@ -262,11 +265,13 @@ Percentage of mitochondrial genes detected for each bead.
 # cell python nohide noscroll: qc_plots_mitoch
 	#("pct_counts_mt", "Percent Mitoch")
 
-fig1 = px.violin(adata.obs.sample(2000), y="pct_counts_mt", box=True, points="all")
+n = min(adata.obs.shape[0], 3000)
+
+fig1 = px.violin(adata.obs.sample(n), y="pct_counts_mt", box=True, points="all")
 fig1.write_image( join("output", "pct_counts_mt.pdf") )
 fig1.write_image( join("output", "pct_counts_mt.png") )
 
-fig2 = px.scatter(adata.obs.sample(2000), x="total_counts", y="pct_counts_mt")
+fig2 = px.scatter(adata.obs.sample(n), x="total_counts", y="pct_counts_mt")
 fig2.write_image( join("output", "total_counts_VS_pct_counts_mt.png") )
 fig2.write_image( join("output", "total_counts_VS_pct_counts_mt.pdf") )
 

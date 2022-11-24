@@ -22,8 +22,10 @@ plots = [
    ("pct_dropout_by_counts", "Dropout")
 ]
 
+n = min(adata.obs.shape[0], 3000)
+
 for column, title in plots:
-   fig = px.violin(adata.var.sample(2000), y=column, box=True, points="all")
+   fig = px.violin(adata.var.sample(n), y=column, box=True, points="all")
    fig.write_image( join("output", f"qc_genes.{column}.pdf") )
    fig.write_image( join("output", f"qc_genes.{column}.png") )
    tab_content.append( go.FigureWidget(fig) )

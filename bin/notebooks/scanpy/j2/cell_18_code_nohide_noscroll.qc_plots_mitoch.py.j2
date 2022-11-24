@@ -1,11 +1,13 @@
 {%- block qc_plots_mitoch -%}
    #("pct_counts_mt", "Percent Mitoch")
 
-fig1 = px.violin(adata.obs.sample(2000), y="pct_counts_mt", box=True, points="all")
+n = min(adata.obs.shape[0], 3000)
+
+fig1 = px.violin(adata.obs.sample(n), y="pct_counts_mt", box=True, points="all")
 fig1.write_image( join("output", "pct_counts_mt.pdf") )
 fig1.write_image( join("output", "pct_counts_mt.png") )
 
-fig2 = px.scatter(adata.obs.sample(2000), x="total_counts", y="pct_counts_mt")
+fig2 = px.scatter(adata.obs.sample(n), x="total_counts", y="pct_counts_mt")
 fig2.write_image( join("output", "total_counts_VS_pct_counts_mt.png") )
 fig2.write_image( join("output", "total_counts_VS_pct_counts_mt.pdf") )
 
