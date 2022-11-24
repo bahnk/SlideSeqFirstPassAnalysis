@@ -9,7 +9,8 @@ tab_titles = []
 
 for column, title in plots:
 
-   fig = px.violin(adata.obs.sample(2000), y=column, box=True, points="all")
+   n = min(adata.obs.shape[0], 3000)
+   fig = px.violin(adata.obs.sample(n), y=column, box=True, points="all")
    fig.write_image( join("output", f"qc_beads.{column}.pdf") )
    fig.write_image( join("output", f"qc_beads.{column}.png") )
    tab_content.append( go.FigureWidget(fig) )
