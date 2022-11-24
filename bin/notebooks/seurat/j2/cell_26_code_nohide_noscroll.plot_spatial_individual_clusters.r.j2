@@ -8,7 +8,7 @@ obj %>%
 
 
 ncol <- 3
-1:round( length(clusters) / ncol) %>%
+1:ceiling( length(clusters) / ncol) %>%
    purrr::map(function(x) ncol * (x-1) + 1:ncol) %>%
    purrr::map(function(x) clusters[x]) %>%
    purrr::map(function(x) {
