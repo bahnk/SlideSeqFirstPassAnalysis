@@ -1,4 +1,4 @@
 {%- block qc_metrics -%}
-adata.var["mt"] = adata.var_names.str.startswith("{{ param_scanpy_mitochondrial_gene_symbol_prefix }}")
+adata.var["mt"] = adata.var_names.str.match("{{ param_scanpy_mitochondrial_gene_symbol_prefix }}")
 sc.pp.calculate_qc_metrics(adata, qc_vars=["mt"], inplace=True)
 {%- endblock -%}

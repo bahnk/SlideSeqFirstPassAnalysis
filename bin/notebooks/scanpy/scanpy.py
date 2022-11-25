@@ -142,7 +142,7 @@ Scanpy will compute basic QC metrics for us.
 ###############################################################################
 # cell python nohide scroll: qc_metrics
 
-adata.var["mt"] = adata.var_names.str.startswith(j2_param_scanpy_mitochondrial_gene_symbol_prefix)
+adata.var["mt"] = adata.var_names.str.match(j2_param_scanpy_mitochondrial_gene_symbol_prefix)
 sc.pp.calculate_qc_metrics(adata, qc_vars=["mt"], inplace=True)
 # cell python nohide scroll: qc_metrics
 
