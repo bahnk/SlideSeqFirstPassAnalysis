@@ -3,4 +3,5 @@ params: params.csv
 out_dir: results
 project: Test dataset
 scientist: Paul Nurse
+min_beads: 500
 

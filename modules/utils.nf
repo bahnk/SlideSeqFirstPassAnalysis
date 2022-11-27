@@ -1,4 +1,5 @@
 
+import groovy.json.JsonSlurper
 import java.nio.file.Files
 import java.nio.file.Paths
 import nextflow.util.ArrayBag
@@ -333,5 +334,18 @@ def checkSpecificParams(metadata, path) {//
 	}
 
 	return metadata
+}
+
+////////////////////////////////
+def addMetrics(metadata, path)//
+////////////////////////////////
+{
+	def slurper = new JsonSlurper()
+	def metrics = slurper.parseText( new File(path).text )
+
+	def new_map = metadata.clone()
+	new_map["metrics"] = metrics
+
+	return new_map
 }
 

@@ -13,7 +13,8 @@ include {
 	removeKeys;
 	toBoolean;
 	getDataPaths;
-	checkAllParams
+	checkAllParams;
+	addMetrics
 	} from "./modules/utils.nf"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -69,6 +70,11 @@ jupyter_book_conf = Channel.fromPath("$workflow.projectDir/assets/jupyter-book/c
 jupyter_book_logo = Channel.fromPath("$workflow.projectDir/assets/jupyter-book/logo.jpg")
 jupyter_book_index = Channel.fromPath("$workflow.projectDir/assets/jupyter-book/index.md")
 
+//////////
+// metrics
+include { metrics } from "./modules/local/metrics/main"
+bin_metrics = Channel.fromPath("$workflow.projectDir/bin/metrics.py")
+
 ///////////////////////////////////////////////////////////////////////////////
 //// DESIGN ///////////////////////////////////////////////////////////////////
 
@@ -106,9 +112,17 @@ workflow {
 
 	params_json(SAMPLES)
 
+	metrics(params_json.out.combine(bin_metrics))
+
+	// filters
+	metrics
+		.out
+		.map{[ addMetrics(it[0], it[3].toString()) , *it[1..2] ]}
+		.filter{ it[0]["metrics"]["Total beads"] >= params.min_beads }
+		.set{ SELECTED_SAMPLES }
+
 	seurat(
-		params_json
-			.out
+		SELECTED_SAMPLES
 			.filter{ it[0]["execution"]["seurat"] }
 			.combine(prefix_seurat)
 			.combine(render_seurat)
@@ -116,8 +130,7 @@ workflow {
 	)
 
 	rctd(
-		params_json
-			.out
+		SELECTED_SAMPLES
 			.filter{ it[0]["execution"]["rctd"] }
 			.combine(prefix_rctd)
 			.combine(render_rctd)
@@ -125,8 +138,7 @@ workflow {
 	)
 
 	sparkx(
-		params_json
-			.out
+		SELECTED_SAMPLES
 			.filter{ it[0]["execution"]["sparkx"] }
 			.combine(prefix_sparkx)
 			.combine(render_sparkx)
@@ -134,8 +146,7 @@ workflow {
 	)
 
 	scanpy(
-		params_json
-			.out
+		SELECTED_SAMPLES
 			.filter{ it[0]["execution"]["scanpy"] }
 			.combine(prefix_scanpy)
 			.combine(render_scanpy)
@@ -144,8 +155,7 @@ workflow {
 	)
 
 	destvi(
-		params_json
-			.out
+		SELECTED_SAMPLES
 			.filter{ it[0]["execution"]["destvi"] }
 			.combine(prefix_destvi)
 			.combine(render_destvi)

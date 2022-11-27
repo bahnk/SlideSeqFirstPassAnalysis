@@ -6,7 +6,7 @@ from os.path import join
 import pandas as pd
 import re
 
-path = "bin/notebooks/scanpy/scanpy.py"
+path = "bin/notebooks/scanpy/main.py"
 directory = "bin/notebooks/scanpy/j2"
 
 try:

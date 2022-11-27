@@ -13,9 +13,13 @@
 # j2 variable value: param_scanpy_min_cells
 # j2 variable value: param_scanpy_clusters_resolution
 
+import numpy as np
+
 j2_name = "sample1"
-j2_path_dge = "test/sample1"
-j2_path_spatial = "test/sample1.csv"
+j2_path_dge = "/camp/stp/babs/working/bahn/projects/slideseq/sequencing/miniseq/211018_MN01566_0015_A000H3KWV7/processing/results/puck_14R"
+j2_path_dge = "/camp/stp/babs/working/bahn/projects/slideseq/sequencing/miniseq/211018_MN01566_0015_A000H3KWV7/processing/results/puck_14R"
+j2_path_dge = "test/data/sample1"
+j2_path_spatial = "test/data/sample1.csv"
 j2_param_scanpy_gene_identifier = "gene_symbols"
 j2_param_scanpy_mitochondrial_gene_symbol_prefix = "mt-"
 j2_param_scanpy_min_genes = 5
@@ -142,7 +146,7 @@ Scanpy will compute basic QC metrics for us.
 ###############################################################################
 # cell python nohide scroll: qc_metrics
 
-adata.var["mt"] = adata.var_names.str.match(j2_param_scanpy_mitochondrial_gene_symbol_prefix)
+adata.var["mt"] = adata.var_names.str.startswith(j2_param_scanpy_mitochondrial_gene_symbol_prefix)
 sc.pp.calculate_qc_metrics(adata, qc_vars=["mt"], inplace=True)
 # cell python nohide scroll: qc_metrics
 
