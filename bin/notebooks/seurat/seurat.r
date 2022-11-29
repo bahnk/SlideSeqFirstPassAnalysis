@@ -51,6 +51,7 @@ library(future)
 library(ggplot2)
 library(patchwork)
 library(purrr)
+library(sceasy)
 # cell r nohide noscroll: libraries
 
 ###############################################################################
@@ -394,6 +395,13 @@ if ( nrow(markers) > 0 )
 ###############################################################################
 # cell r nohide noscroll: save
 saveRDS(obj, "output/seurat_object.rds")
+
+sceasy::convertFormat(
+	obj,
+	from="seurat",
+	to="anndata",
+	outFile="output/seurat_object.h5ad"
+	)
 # cell r nohide noscroll: save
 
 ###############################################################################

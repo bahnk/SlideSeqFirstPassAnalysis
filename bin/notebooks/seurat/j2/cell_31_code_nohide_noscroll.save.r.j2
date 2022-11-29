@@ -1,3 +1,10 @@
 {%- block save -%}
 saveRDS(obj, "output/seurat_object.rds")
+
+sceasy::convertFormat(
+   obj,
+   from="seurat",
+   to="anndata",
+   outFile="output/seurat_object.h5ad"
+   )
 {%- endblock -%}
