@@ -400,6 +400,7 @@ sceasy::convertFormat(
 	obj,
 	from="seurat",
 	to="anndata",
+	assay="Spatial",
 	outFile="output/seurat_object.h5ad"
 	)
 # cell r nohide noscroll: save
