@@ -11,6 +11,9 @@ if ( "second_type" %in% colnames(rctd@results$results_df) )
    plotly::save_image(fig, "output/second_type.png")
    plotly::save_image(fig, "output/second_type.pdf")
    
-   fig
+   #fig
+
+   g <- ggplot2::ggplot(df, aes(x=x, y=y, color=second_type)) + geom_point()
+   g
 }
 {%- endblock -%}

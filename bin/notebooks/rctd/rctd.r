@@ -34,6 +34,8 @@ Here are the libraries we need.
 library(Seurat)
 library(dplyr)
 library(future)
+library(ggplot2)
+library(plotly)
 library(readr)
 library(spacexr)
 library(tibble)
@@ -185,7 +187,10 @@ if ( "first_type" %in% colnames(rctd@results$results_df) )
 	plotly::save_image(fig, "output/first_type.png")
 	plotly::save_image(fig, "output/first_type.pdf")
 	
-	fig
+	#fig
+
+	g <- ggplot2::ggplot(df, aes(x=x, y=y, color=first_type)) + geom_point()
+	g
 }
 # cell r nohide noscroll: plot_first_type
 
@@ -211,7 +216,10 @@ if ( "second_type" %in% colnames(rctd@results$results_df) )
 	plotly::save_image(fig, "output/second_type.png")
 	plotly::save_image(fig, "output/second_type.pdf")
 	
-	fig
+	#fig
+
+	g <- ggplot2::ggplot(df, aes(x=x, y=y, color=second_type)) + geom_point()
+	g
 }
 # cell r nohide noscroll: plot_second_type
 

@@ -152,7 +152,15 @@ process notebook_r {
 		saveAs: { filename -> "${metadata.name}/${prefix}/${filename}" }
 
 	input:
-		tuple val(metadata), path(files), path(conf), val(prefix), path(render), path(j2)
+		tuple \
+			val(metadata),
+			path(files),
+			path(conf),
+			val(prefix),
+			path(render),
+			path(j2),
+			path(nbconvert_tpl)
+	
 	
 	output:
 		tuple val(metadata), path(files), path(conf), path("${basename}.ipynb"), emit: ipynb
@@ -182,7 +190,10 @@ process notebook_r {
 					--inplace \
 					"${basename}.ipynb"
 
-			jupyter-nbconvert --to html "${basename}.ipynb"
+			jupyter-nbconvert \
+				--to html \
+				--template-file "${nbconvert_tpl}" \
+				"${basename}.ipynb"
 
 			R -e '${r_cmd}'
 			"""

@@ -1,5 +1,5 @@
 
-params: params.csv
+params: params_full.csv
 out_dir: results
 project: Test dataset
 scientist: Paul Nurse

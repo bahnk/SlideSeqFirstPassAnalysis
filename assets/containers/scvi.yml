@@ -1,0 +1,40 @@
+name: scvi
+
+channels:
+    - anaconda
+    - conda-forge
+    - bioconda
+    - pytorch
+
+dependencies:
+
+    - python=3.7
+    - pip
+    
+    - bbknn
+    - jinja2
+    - jupyter
+    - leidenalg
+    - louvain
+    - lxml
+    - matplotlib
+    - matplotlib-venn
+    - numpy
+    - pandas
+    - plotly
+    - pymde
+    - pytorch=1.8
+    - scanpy
+    - scikit-learn
+    - scikit-misc
+    - scipy
+    - scvi-tools
+    - seaborn
+    - statsmodels
+    - udunits2
+    - umap-learn
+    - xlrd
+    
+    - pip:
+       - git+git://github.com/slowkow/harmonypy.git
+

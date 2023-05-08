@@ -127,6 +127,7 @@ workflow {
 			.combine(prefix_seurat)
 			.combine(render_seurat)
 			.combine(j2_seurat)
+			.combine(nbconvert_template)
 	)
 
 	rctd(
@@ -135,6 +136,7 @@ workflow {
 			.combine(prefix_rctd)
 			.combine(render_rctd)
 			.combine(j2_rctd)
+			.combine(nbconvert_template)
 	)
 
 	sparkx(
@@ -143,6 +145,7 @@ workflow {
 			.combine(prefix_sparkx)
 			.combine(render_sparkx)
 			.combine(j2_sparkx)
+			.combine(nbconvert_template)
 	)
 
 	scanpy(
